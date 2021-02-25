@@ -2,6 +2,7 @@ package com.bestleisure.backend.model;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "roles")
@@ -16,15 +17,15 @@ public class Role {
     private String name;
 
     @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
-    private Collection<User> users;
+    @OrderColumn
+    private List<User> users;
 
     public Role() {
     }
 
-    public Role(Long id, String name, Collection<User> users) {
+    public Role(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.users = users;
     }
 
     public Long getId() {
@@ -43,11 +44,11 @@ public class Role {
         this.name = name;
     }
 
-    public Collection<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(Collection<User> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 }
