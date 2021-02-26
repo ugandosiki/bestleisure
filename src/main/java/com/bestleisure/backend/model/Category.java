@@ -20,11 +20,12 @@ public class Category {
     @Column(name = "name", unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "category")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<SubCategory> subCategories;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
-    @OrderColumn
+    @OneToMany(mappedBy = "category")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Post> posts;
 
     public Category(Long id, String name) {

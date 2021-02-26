@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IPostRepository extends JpaRepository<Post, Long> {
     Post findPostByTitle(String title);
-    boolean deletePostByTitle(String title);
+    void deletePostByTitle(String title);
 }

@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ISubCategoryRepository extends JpaRepository<SubCategory, Long> {
     SubCategory findSubCategoryByName(String name);
-    boolean deleteSubCategoryByName(String name);
+    void deleteSubCategoryByName(String name);
 }

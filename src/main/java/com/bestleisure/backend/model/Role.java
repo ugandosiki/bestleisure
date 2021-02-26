@@ -1,5 +1,8 @@
 package com.bestleisure.backend.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
@@ -16,8 +19,8 @@ public class Role {
     @Column(name = "name", unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
-    @OrderColumn
+    @OneToMany(mappedBy = "role")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<User> users;
 
     public Role() {

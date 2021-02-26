@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IBannerRepository extends JpaRepository<Banner, Long> {
     Banner findBannerByTitle(String title);
-    boolean deleteBannerByTitle(String title);
+    void deleteBannerByTitle(String title);
 }

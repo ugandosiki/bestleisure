@@ -1,5 +1,8 @@
 package com.bestleisure.backend.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
@@ -29,8 +32,8 @@ public class Post {
     @JoinColumn(name = "subcategory_id")
     private SubCategory subCategory;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
-    @OrderColumn
+    @OneToMany(mappedBy = "post")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Banner> banners;
 
     public Post() {

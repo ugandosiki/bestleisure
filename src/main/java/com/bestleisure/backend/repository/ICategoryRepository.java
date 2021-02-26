@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ICategoryRepository extends JpaRepository<Category, Long> {
     Category findCategoryByName(String name);
-    boolean deleteCategoryByName(String name);
+    void deleteCategoryByName(String name);
 }
