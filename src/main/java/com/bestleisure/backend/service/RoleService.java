@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class RoleService implements IRoleService{
+public class RoleService implements IRoleService {
     private final IRoleRepository iRoleRepository;
 
     public RoleService(IRoleRepository iRoleRepository) {
@@ -17,11 +17,10 @@ public class RoleService implements IRoleService{
 
     @Override
     public boolean createRole(Role role) throws ObjectNotFoundException {
-        try{
+        try {
             iRoleRepository.save(role);
             return true;
-        }
-        catch (ObjectNotFoundException e){
+        } catch (ObjectNotFoundException e) {
             System.out.println(e.getMessage());
             return false;
         }
@@ -44,11 +43,10 @@ public class RoleService implements IRoleService{
 
     @Override
     public boolean deleteRole(Long id) throws IllegalArgumentException {
-        try{
+        try {
             iRoleRepository.deleteById(id);
             return true;
-        }
-        catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return false;
         }
@@ -56,13 +54,17 @@ public class RoleService implements IRoleService{
 
     @Override
     public boolean deleteRole(String name) throws IllegalArgumentException {
-        try{
+        try {
             iRoleRepository.deleteByName(name);
             return true;
-        }
-        catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return false;
         }
+    }
+
+    @Override
+    public void deleteAllRoles() {
+        iRoleRepository.deleteAll();
     }
 }

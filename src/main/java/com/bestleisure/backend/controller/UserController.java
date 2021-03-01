@@ -15,19 +15,33 @@ public class UserController {
         this.userService = userService;
     }
 
+    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping("add")
-    public boolean addUser(User user){
+    public boolean addUser(User user) {
         return userService.createUser(user);
     }
 
-    @GetMapping("get")
-    public List<User> getAllUsers(){
+    @CrossOrigin(origins = "http://localhost:8081")
+    @GetMapping("getAll")
+    public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
+    @CrossOrigin(origins = "http://localhost:8081")
     @GetMapping("get/{id}")
-    public User getUser(@PathVariable long id){
+    public User getUserById(@PathVariable long id) {
         return userService.getOneUser(id);
     }
 
+    @CrossOrigin(origins = "http://localhost:8081")
+    @DeleteMapping("delete/{id}")
+    public boolean deleteUserById(@PathVariable Long id) {
+        return userService.deleteUser(id);
+    }
+
+    @CrossOrigin(origins = "http://localhost:8081")
+    @DeleteMapping("delete/{name}")
+    public boolean deleteUserByName(@PathVariable String name) {
+        return userService.deleteUser(name);
+    }
 }

@@ -12,4 +12,5 @@ public interface IRoleService{
     List<Role> getAllRoles();
     boolean deleteRole(Long id);
     boolean deleteRole(String name);
+    void deleteAllRoles();
 }
