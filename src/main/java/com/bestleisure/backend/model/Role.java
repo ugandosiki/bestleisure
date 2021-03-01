@@ -1,5 +1,8 @@
 package com.bestleisure.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -19,8 +22,8 @@ public class Role {
     @Column(name = "name", unique = true)
     private String name;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "role")
-    @LazyCollection(LazyCollectionOption.FALSE)
     private List<User> users;
 
     public Role() {

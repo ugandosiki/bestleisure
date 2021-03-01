@@ -1,5 +1,7 @@
 package com.bestleisure.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -19,7 +21,8 @@ public class Banner {
 
     @Column(name = "img_url", unique = true, nullable = false)
     private String imgUrl;
-
+    
+    @JsonBackReference
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private Post post;

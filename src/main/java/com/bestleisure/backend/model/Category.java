@@ -1,5 +1,6 @@
 package com.bestleisure.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -20,10 +21,12 @@ public class Category {
     @Column(name = "name", unique = true)
     private String name;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "category")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<SubCategory> subCategories;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "category")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Post> posts;
