@@ -4,6 +4,7 @@ package com.bestleisure.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
@@ -27,7 +28,7 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @JsonBackReference
+    @JsonManagedReference
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")
     private Role role;

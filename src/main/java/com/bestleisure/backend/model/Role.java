@@ -1,5 +1,6 @@
 package com.bestleisure.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import net.minidev.json.annotate.JsonIgnore;
@@ -22,7 +23,7 @@ public class Role {
     @Column(name = "name", unique = true)
     private String name;
 
-    @JsonManagedReference
+    @JsonBackReference
     @OneToMany(mappedBy = "role")
     private List<User> users;
 
