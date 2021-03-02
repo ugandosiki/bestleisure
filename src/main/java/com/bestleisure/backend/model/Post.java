@@ -27,17 +27,22 @@ public class Post {
     @Column(name = "img_url", unique = true, nullable = false)
     private String imgUrl;
 
-    @JsonBackReference
+    @JsonManagedReference
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @JsonBackReference
+    @JsonManagedReference
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @JsonManagedReference
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "subcategory_id")
     private SubCategory subCategory;
 
-    @JsonManagedReference
+    @JsonBackReference
     @OneToMany(mappedBy = "post")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Banner> banners;
@@ -45,13 +50,14 @@ public class Post {
     public Post() {
     }
 
-    public Post(Long id, String title, String description, String imgUrl, Category category, SubCategory subCategory) {
+    public Post(Long id, String title, String description, String imgUrl, Category category, SubCategory subCategory, User user) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.imgUrl = imgUrl;
         this.category = category;
         this.subCategory = subCategory;
+        this.user = user;
     }
 
     public List<Banner> getBanners() {
@@ -108,6 +114,14 @@ public class Post {
 
     public void setSubCategory(SubCategory subCategory) {
         this.subCategory = subCategory;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
 

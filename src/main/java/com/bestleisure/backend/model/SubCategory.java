@@ -22,12 +22,12 @@ public class SubCategory {
     @Column(name = "name", unique = true)
     private String name;
 
-    @JsonBackReference
+    @JsonManagedReference
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @JsonManagedReference
+    @JsonBackReference
     @OneToMany(mappedBy = "subCategory")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Post> posts;

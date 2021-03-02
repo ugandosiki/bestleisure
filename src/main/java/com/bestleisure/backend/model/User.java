@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.List;
+
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "users")
@@ -27,6 +29,10 @@ public class User {
 
     @Column(name = "password")
     private String password;
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
 
     @JsonManagedReference
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
