@@ -11,9 +11,20 @@ import javax.persistence.*;
 public class Image {
     @Id
     @Column(name = "id", updatable = false)
-    @SequenceGenerator(name = "role_sequence", sequenceName = "roles_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_sequence")
+    @SequenceGenerator(name = "image_sequence", sequenceName = "images_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "image_sequence")
     private Long id;
+
+    @Column(name = "name", unique = true)
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     @Column(name = "path", unique = true)
     private String path;
@@ -31,11 +42,12 @@ public class Image {
     public Image() {
     }
 
-    public Image(Long id, String path, Post post_id, Banner banner_id) {
+    public Image(Long id, String path, Post post_id, Banner banner_id, String name) {
         this.id = id;
         this.path = path;
         this.post_id = post_id;
         this.banner_id = banner_id;
+        this.name = name;
     }
 
     public Long getId() {

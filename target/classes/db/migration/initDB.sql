@@ -18,8 +18,7 @@ CREATE TABLE IF NOT EXISTS users
 CREATE TABLE IF NOT EXISTS categories
 (
     id         BIGSERIAL PRIMARY KEY,
-    zz
-               name VARCHAR(100) UNIQUE,
+    name       VARCHAR(100) UNIQUE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 CREATE TABLE IF NOT EXISTS subCategories
@@ -30,6 +29,13 @@ CREATE TABLE IF NOT EXISTS subCategories
     created_at  TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (category_id) REFERENCES categories (id)
 );
+CREATE TABLE IF NOT EXISTS images
+(
+    id          BIGSERIAL PRIMARY KEY,
+    name        VARCHAR(200) UNIQUE,
+    path        VARCHAR(200) UNIQUE,
+    uploaded_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
 CREATE TABLE IF NOT EXISTS posts
 (
     id             BIGSERIAL PRIMARY KEY,
@@ -39,7 +45,6 @@ CREATE TABLE IF NOT EXISTS posts
     image_id       INTEGER,
     title          VARCHAR(250) UNIQUE NOT NULL,
     description    TEXT,
-    img_url        VARCHAR(250) UNIQUE NOT NULL,
     created_at     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (category_id) REFERENCES categories (id),
     FOREIGN KEY (subCategory_id) REFERENCES subCategories (id),
@@ -50,15 +55,16 @@ CREATE TABLE IF NOT EXISTS banners
 (
     id          BIGSERIAL PRIMARY KEY,
     post_id     INTEGER,
+    image_id    INTEGER,
     title       VARCHAR(250) UNIQUE NOT NULL,
     description TEXT,
-    img_url     VARCHAR(250),
     created_at  TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (post_id) REFERENCES posts (id)
+    FOREIGN KEY (post_id) REFERENCES posts (id),
+    FOREIGN KEY (image_id) REFERENCES images (id)
 );
-CREATE TABLE IF NOT EXISTS images
-(
-    id          BIGSERIAL PRIMARY KEY,
-    url         VARCHAR(200),
-    uploaded_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-)
+ALTER TABLE images
+    ADD post_id INTEGER
+        REFERENCES posts (id);
+ALTER TABLE images
+    ADD banner_id INTEGER
+        REFERENCES banners (id);

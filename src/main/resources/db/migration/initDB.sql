@@ -32,7 +32,8 @@ CREATE TABLE IF NOT EXISTS subCategories
 CREATE TABLE IF NOT EXISTS images
 (
     id          BIGSERIAL PRIMARY KEY,
-    path        VARCHAR(200) UNIQUE ,
+    name        VARCHAR(200) UNIQUE,
+    path        VARCHAR(200) UNIQUE,
     uploaded_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 CREATE TABLE IF NOT EXISTS posts
@@ -54,10 +55,16 @@ CREATE TABLE IF NOT EXISTS banners
 (
     id          BIGSERIAL PRIMARY KEY,
     post_id     INTEGER,
-    img_id      INTEGER,
+    image_id    INTEGER,
     title       VARCHAR(250) UNIQUE NOT NULL,
     description TEXT,
     created_at  TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (post_id) REFERENCES posts (id),
-    FOREIGN KEY (img_id) REFERENCES images (id)
+    FOREIGN KEY (image_id) REFERENCES images (id)
 );
+ALTER TABLE images
+    ADD post_id INTEGER
+        REFERENCES posts (id);
+ALTER TABLE images
+    ADD banner_id INTEGER
+        REFERENCES banners (id);

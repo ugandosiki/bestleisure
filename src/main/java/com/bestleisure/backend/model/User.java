@@ -5,7 +5,6 @@ package com.bestleisure.backend.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
@@ -37,18 +36,18 @@ public class User {
     @JsonManagedReference
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")
-    private Role role;
+    private Role role_id;
 
     public  User(){
 
     }
 
-    public User(Long id, String name, String email, String password, Role role) {
+    public User(Long id, String name, String email, String password, Role role_id) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
-        this.role = role;
+        this.role_id = role_id;
     }
 
     public Long getId() {
@@ -83,11 +82,11 @@ public class User {
         this.password = password;
     }
 
-    public Role getRole() {
-        return role;
+    public Role getRole_id() {
+        return role_id;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRole_id(Role role_id) {
+        this.role_id = role_id;
     }
 }

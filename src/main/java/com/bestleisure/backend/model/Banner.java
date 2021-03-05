@@ -23,8 +23,8 @@ public class Banner {
     @Column(name = "description", unique = true)
     private String description;
 
-    @Column(name = "img_id", unique = true, nullable = false)
-    private String img_id;
+    @Column(name = "image_id", unique = true, nullable = false)
+    private String image_id;
 
     @JsonManagedReference
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
@@ -35,11 +35,11 @@ public class Banner {
     @OneToMany(mappedBy = "banner_id")
     private List<Image> images;
 
-    public Banner(Long id, String title, String description, String img_id, Post post_id) {
+    public Banner(Long id, String title, String description, String img_id, Post post_id, Image image_id) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.img_id = img_id;
+        this.image_id = img_id;
         this.post_id = post_id;
     }
 
@@ -70,12 +70,12 @@ public class Banner {
         this.description = description;
     }
 
-    public String getImg_id() {
-        return img_id;
+    public String getImage_id() {
+        return image_id;
     }
 
-    public void setImg_id(String img_id) {
-        this.img_id = img_id;
+    public void setImage_id(String image_id) {
+        this.image_id = image_id;
     }
 
     public Post getPost_id() {
