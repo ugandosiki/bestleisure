@@ -15,7 +15,7 @@ public class PostController {
         this.postService = postService;
     }
 
-    @CrossOrigin(origins = {"crossServer"})
+    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping("add")
     public boolean addPost(Post post){
         if (post != null) {
@@ -24,7 +24,7 @@ public class PostController {
         } else return false;
     }
 
-    @CrossOrigin(origins = {"crossServer"})
+    @CrossOrigin(origins = "http://localhost:8081")
     @GetMapping("get")
     public List<Post> getAllPosts() {
         return postService.getAllPost();

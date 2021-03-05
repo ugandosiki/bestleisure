@@ -13,7 +13,7 @@ public class ImageController {
         this.imageService = imageService;
     }
 
-    @CrossOrigin(origins = {"crossServer"})
+    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping("upload")
     public void uploadFile(MultipartFile file) {
         imageService.save(file);
@@ -24,7 +24,7 @@ public class ImageController {
 //    public void getAllFiles(){
 //
 //    }
-    @CrossOrigin(origins = {"crossServer"})
+    @CrossOrigin(origins = "http://localhost:8081")
     @GetMapping("image/{filename}")
     public void getFile(@PathVariable String filename) {
         imageService.load(filename);

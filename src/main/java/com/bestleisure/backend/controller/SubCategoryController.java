@@ -15,7 +15,7 @@ public class SubCategoryController {
         this.subCategoryService = subCategoryService;
     }
 
-    @CrossOrigin(origins = {"crossServer"})
+    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping("add")
     public boolean addSubCategory(SubCategory subCategory){
         if (subCategory != null) {
@@ -24,7 +24,7 @@ public class SubCategoryController {
         } else return false;
     }
 
-    @CrossOrigin(origins = {"crossServer"})
+    @CrossOrigin(origins = "http://localhost:8081")
     @GetMapping("get")
     public List<SubCategory> getAllSubCategories() {
         return subCategoryService.getAllSubCategory();
