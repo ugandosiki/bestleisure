@@ -7,7 +7,6 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
@@ -25,20 +24,20 @@ public class SubCategory {
     @JsonManagedReference
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
-    private Category category;
+    private Category category_id;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "subCategory")
+    @OneToMany(mappedBy = "subCategory_id")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Post> posts;
 
     public SubCategory() {
     }
 
-    public SubCategory(Long id, String name, Category category) {
+    public SubCategory(Long id, String name, Category category_id) {
         this.id = id;
         this.name = name;
-        this.category = category;
+        this.category_id = category_id;
     }
 
     public Long getId() {
@@ -57,11 +56,11 @@ public class SubCategory {
         this.name = name;
     }
 
-    public Category getCategory() {
-        return category;
+    public Category getCategory_id() {
+        return category_id;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategory_id(Category category_id) {
+        this.category_id = category_id;
     }
 }

@@ -31,7 +31,7 @@ public class User {
     private String password;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user_id")
     private List<Post> posts;
 
     @JsonManagedReference

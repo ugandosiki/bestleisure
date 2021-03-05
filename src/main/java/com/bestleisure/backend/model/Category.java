@@ -24,12 +24,12 @@ public class Category {
     private String name;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category_id")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<SubCategory> subCategories;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category_id")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Post> posts;
 

@@ -24,7 +24,7 @@ public class Role {
     private String name;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "role_id")
     private List<User> users;
 
     public Role() {

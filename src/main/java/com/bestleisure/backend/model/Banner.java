@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.List;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
@@ -22,20 +23,24 @@ public class Banner {
     @Column(name = "description", unique = true)
     private String description;
 
-    @Column(name = "img_url", unique = true, nullable = false)
-    private String imgUrl;
+    @Column(name = "img_id", unique = true, nullable = false)
+    private String img_id;
 
     @JsonManagedReference
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
-    private Post post;
+    private Post post_id;
 
-    public Banner(Long id, String title, String description, String imgUrl, Post post) {
+    @JsonBackReference
+    @OneToMany(mappedBy = "banner_id")
+    private List<Image> images;
+
+    public Banner(Long id, String title, String description, String img_id, Post post_id) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.imgUrl = imgUrl;
-        this.post = post;
+        this.img_id = img_id;
+        this.post_id = post_id;
     }
 
     public Banner() {
@@ -65,19 +70,19 @@ public class Banner {
         this.description = description;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public String getImg_id() {
+        return img_id;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setImg_id(String img_id) {
+        this.img_id = img_id;
     }
 
-    public Post getPost() {
-        return post;
+    public Post getPost_id() {
+        return post_id;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public void setPost_id(Post post_id) {
+        this.post_id = post_id;
     }
 }

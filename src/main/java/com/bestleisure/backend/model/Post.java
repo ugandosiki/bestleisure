@@ -7,8 +7,8 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
+
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "posts")
@@ -24,40 +24,45 @@ public class Post {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "img_url", unique = true, nullable = false)
-    private String imgUrl;
+    @Column(name = "img_id", unique = true, nullable = false)
+    private String img_id;
 
     @JsonManagedReference
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
-    private Category category;
+    private Category category_id;
 
     @JsonManagedReference
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    private User user;
+    private User user_id;
 
     @JsonManagedReference
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "subcategory_id")
-    private SubCategory subCategory;
+    private SubCategory subCategory_id;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post_id")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Banner> banners;
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "post_id")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Image> images;
 
     public Post() {
     }
 
-    public Post(Long id, String title, String description, String imgUrl, Category category, SubCategory subCategory, User user) {
+    public Post(Long id, String title, String description, String img_id, Category category_id, SubCategory subCategory_id, User user_id) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.imgUrl = imgUrl;
-        this.category = category;
-        this.subCategory = subCategory;
-        this.user = user;
+        this.img_id = img_id;
+        this.category_id = category_id;
+        this.subCategory_id = subCategory_id;
+        this.user_id = user_id;
     }
 
     public List<Banner> getBanners() {
@@ -92,36 +97,36 @@ public class Post {
         this.description = description;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public String getImg_id() {
+        return img_id;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setImg_id(String img_id) {
+        this.img_id = img_id;
     }
 
-    public Category getCategory() {
-        return category;
+    public Category getCategory_id() {
+        return category_id;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategory_id(Category category_id) {
+        this.category_id = category_id;
     }
 
-    public SubCategory getSubCategory() {
-        return subCategory;
+    public SubCategory getSubCategory_id() {
+        return subCategory_id;
     }
 
-    public void setSubCategory(SubCategory subCategory) {
-        this.subCategory = subCategory;
+    public void setSubCategory_id(SubCategory subCategory_id) {
+        this.subCategory_id = subCategory_id;
     }
 
-    public User getUser() {
-        return user;
+    public User getUser_id() {
+        return user_id;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser_id(User user_id) {
+        this.user_id = user_id;
     }
 }
 
