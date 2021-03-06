@@ -1,4 +1,4 @@
-package com.bestleisure.backend;
+package com.bestleisure.backend.util;
 
 import org.springframework.web.multipart.MultipartFile;
 
