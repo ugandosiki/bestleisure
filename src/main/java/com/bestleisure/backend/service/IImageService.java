@@ -1,8 +1,10 @@
 package com.bestleisure.backend.service;
 
-import org.springframework.web.multipart.MultipartFile;
+import com.bestleisure.backend.model.Image;
 
 public interface IImageService {
+    void saveImage(Image image);
 
+    void deleteImage();
 
 }

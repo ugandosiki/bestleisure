@@ -50,6 +50,10 @@ public class Image {
         this.name = name;
     }
 
+    public Image(String path) {
+        this.path = path;
+    }
+
     public Long getId() {
         return this.id;
     }
