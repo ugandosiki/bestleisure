@@ -15,7 +15,7 @@ public class BannerController {
         this.bannerService = bannerService;
     }
 
-    @CrossOrigin(origins = {"crossServer"})
+    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping("add")
     public boolean addBanner(Banner banner) {
         if (banner != null) {
@@ -24,7 +24,7 @@ public class BannerController {
         } else return false;
     }
 
-    @CrossOrigin(origins = {"crossServer"})
+    @CrossOrigin(origins = "http://localhost:8081")
     @GetMapping("get")
     public List<Banner> getAllSubCategories() {
         return bannerService.getAllBanner();

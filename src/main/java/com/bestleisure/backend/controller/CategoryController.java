@@ -15,7 +15,7 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @CrossOrigin(origins = {"crossServer"})
+    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping("add")
     public boolean addCategory(Category category) {
         if (category != null) {
@@ -24,7 +24,7 @@ public class CategoryController {
         } else return false;
     }
 
-    @CrossOrigin(origins = {"crossServer"})
+    @CrossOrigin(origins = "http://localhost:8081")
     @GetMapping("get")
     public List<Category> getAllCategories() {
         return categoryService.getAllCategories();
