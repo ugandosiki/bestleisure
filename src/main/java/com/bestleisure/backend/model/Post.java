@@ -24,9 +24,6 @@ public class Post {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "image_id", unique = true, nullable = false)
-    private String image_id;
-
     @JsonManagedReference
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
@@ -55,11 +52,10 @@ public class Post {
     public Post() {
     }
 
-    public Post(Long id, String title, String description, String img_id, Category category_id, SubCategory subCategory_id, User user_id, Image image_id) {
+    public Post(Long id, String title, String description, String img_id, Category category_id, SubCategory subCategory_id, User user_id) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.image_id = img_id;
         this.category_id = category_id;
         this.subCategory_id = subCategory_id;
         this.user_id = user_id;
@@ -95,14 +91,6 @@ public class Post {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getImage_id() {
-        return image_id;
-    }
-
-    public void setImage_id(String image_id) {
-        this.image_id = image_id;
     }
 
     public Category getCategory_id() {

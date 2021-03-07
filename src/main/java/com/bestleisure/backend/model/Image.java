@@ -15,39 +15,20 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "image_sequence")
     private Long id;
 
-    @Column(name = "name", unique = true)
-    private String name;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Column(name = "path", unique = true)
     private String path;
 
     @JsonManagedReference
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private Post post_id;
 
     @JsonManagedReference
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "banner_id")
     private Banner banner_id;
 
     public Image() {
-    }
-
-    public Image(Long id, String path, Post post_id, Banner banner_id, String name) {
-        this.id = id;
-        this.path = path;
-        this.post_id = post_id;
-        this.banner_id = banner_id;
-        this.name = name;
     }
 
     public Image(String path) {
@@ -58,7 +39,7 @@ public class Image {
         return this.id;
     }
 
-    public void setId(final Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -66,7 +47,7 @@ public class Image {
         return this.path;
     }
 
-    public void setPath(final String path) {
+    public void setPath(String path) {
         this.path = path;
     }
 
@@ -74,7 +55,7 @@ public class Image {
         return this.post_id;
     }
 
-    public void setPost_id(final Post post_id) {
+    public void setPost_id(Post post_id) {
         this.post_id = post_id;
     }
 
@@ -82,7 +63,7 @@ public class Image {
         return this.banner_id;
     }
 
-    public void setBanner_id(final Banner banner_id) {
+    public void setBanner_id(Banner banner_id) {
         this.banner_id = banner_id;
     }
 }

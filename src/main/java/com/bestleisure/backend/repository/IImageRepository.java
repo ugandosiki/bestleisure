@@ -4,5 +4,5 @@ import com.bestleisure.backend.model.Image;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IImageRepository extends JpaRepository<Image, Long> {
-    Image findImageByName(String name);
+    Image findImageByPath(String path);
 }

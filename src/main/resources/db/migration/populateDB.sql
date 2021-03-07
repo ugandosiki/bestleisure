@@ -11,9 +11,9 @@ VALUES ('Ukraine'),
 INSERT INTO subcategories(name, category_id)
 VALUES ('Kyiv', 1),
        ('Warshaw', 2);
-INSERT INTO images(name, path)
-VALUES ('img1', 'img1.jpg'),
-       ('img2', 'img2.jpg');
+INSERT INTO images(path)
+VALUES ('img1.jpg'),
+       ('img2.jpg');
 INSERT INTO posts(user_id, category_id, subcategory_id, image_id, title, description)
 VALUES (2, 1, 1, 1, 'Baghdad', 'Hachovnia pod 11 obsh'),
        (2, 2, 2, 2, 'Polska zabava', 'Origin Polish kulebiaka');

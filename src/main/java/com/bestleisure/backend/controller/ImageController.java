@@ -1,5 +1,6 @@
 package com.bestleisure.backend.controller;
 
+import com.bestleisure.backend.model.Banner;
 import com.bestleisure.backend.util.FileUploadUtil;
 import com.bestleisure.backend.model.Image;
 import com.bestleisure.backend.service.ImageService;
@@ -23,15 +24,13 @@ public class ImageController {
     }
 
     @PostMapping("upload")
-    public void upload(@RequestParam MultipartFile file) throws IOException {
+    public void upload(@RequestParam("file") MultipartFile file) throws IOException {
         if (file.isEmpty()) {
             throw new IOException("File is empty: ");
         } else {
             String filename = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
-
             String uploadDir = "uploads/";
             FileUploadUtil.saveFile(uploadDir, filename, file);
-
             Image image = new Image(filename);
             imageService.saveImage(image);
         }
