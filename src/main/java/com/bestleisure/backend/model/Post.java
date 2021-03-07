@@ -24,6 +24,17 @@ public class Post {
     @Column(name = "description")
     private String description;
 
+    public Integer getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Integer likes) {
+        this.likes = likes;
+    }
+
+    @Column(name = "likes")
+    private Integer likes;
+
     @JsonManagedReference
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
@@ -52,7 +63,7 @@ public class Post {
     public Post() {
     }
 
-    public Post(Long id, String title, String description, String img_id, Category category_id, SubCategory subCategory_id, User user_id) {
+    public Post(Long id, String title, String description, Category category_id, SubCategory subCategory_id, User user_id) {
         this.id = id;
         this.title = title;
         this.description = description;
