@@ -7,7 +7,6 @@ import com.bestleisure.backend.model.Post;
 import com.bestleisure.backend.service.ImageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,7 +16,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Objects;
 
 public  class FileUploadUtil {
     static ImageService imageService;
@@ -61,9 +59,9 @@ public  class FileUploadUtil {
 
     public static ResponseEntity<ResponseMessage> upload(@RequestParam("file") MultipartFile file, Banner banner) {
         String message = "";
+        String uploadDir = "uploads/";
         try {
             String filename = "Banner_"+  banner.getId()+"_"+banner.getTitle()+".jpg";
-            String uploadDir = "uploads/";
             FileUploadUtil.saveFile(uploadDir, filename, file);
             Image image = new Image(filename);
             imageService.saveImage(image);

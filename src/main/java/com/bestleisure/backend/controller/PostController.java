@@ -1,18 +1,17 @@
 package com.bestleisure.backend.controller;
 
-import com.bestleisure.backend.model.Image;
+import com.bestleisure.backend.message.ResponseMessage;
 import com.bestleisure.backend.model.Post;
 import com.bestleisure.backend.service.ImageService;
 import com.bestleisure.backend.service.PostService;
 import com.bestleisure.backend.util.FileUploadUtil;
-import org.springframework.util.StringUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("posts")
@@ -29,12 +28,13 @@ public class PostController {
 
     @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping("add")
-    public void addPost(Post post, @RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity<ResponseMessage> addPost(Post post, @RequestParam("file") MultipartFile file) throws IOException {
         if (file.isEmpty()) {
-            throw new IOException("File is empty ");
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage("File is empty"));
         } else {
             postService.createPost(post);
-            FileUploadUtil.upload(file,post);
+            FileUploadUtil.upload(file, post);
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("File " + file.getOriginalFilename() + " was successfully uploaded!"));
         }
     }
 
