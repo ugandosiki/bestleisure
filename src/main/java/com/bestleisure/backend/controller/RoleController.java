@@ -17,8 +17,8 @@ public class RoleController {
 
     @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping("add")
-    public boolean addRole(Role role) {
-        return roleService.createRole(role);
+    public void addRole(Role role) {
+         roleService.createRole(role);
     }
 
     @CrossOrigin(origins = "http://localhost:8081")
@@ -41,14 +41,14 @@ public class RoleController {
 
     @CrossOrigin(origins = "http://localhost:8081")
     @DeleteMapping("delete/{id}")
-    public boolean deleteRole(@PathVariable Long id) {
-        return roleService.deleteRole(id);
+    public void deleteRole(@PathVariable Long id) {
+         roleService.deleteRole(id);
     }
 
     @CrossOrigin(origins = "http://localhost:8081")
     @DeleteMapping("delete/{name}")
-    public boolean deleteRole(@PathVariable String name) {
-        return roleService.deleteRole(name);
+    public void deleteRole(@PathVariable String name) {
+         roleService.deleteRole(name);
     }
 
 }

@@ -2,11 +2,13 @@ package com.bestleisure.backend.service;
 
 import com.bestleisure.backend.model.Category;
 import com.bestleisure.backend.repository.ICategoryRepository;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
-public class CategoryService implements ICategoryService{
+public class CategoryService implements ICategoryService {
     private final ICategoryRepository iCategoryRepository;
 
     public CategoryService(ICategoryRepository iCategoryRepository) {
@@ -14,12 +16,12 @@ public class CategoryService implements ICategoryService{
     }
 
     @Override
-    public boolean createCategory(Category category) {
-       if(category != null){
-           iCategoryRepository.save(category);
-           return true;
-       }
-       else return false;
+    public void createCategory(Category category) {
+        try {
+            iCategoryRepository.save(category);
+        } catch (ObjectNotFoundException exception) {
+            throw new RuntimeException(exception.getMessage());
+        }
     }
 
     @Override
@@ -38,19 +40,20 @@ public class CategoryService implements ICategoryService{
     }
 
     @Override
-    public boolean deleteCategory(Long id) {
-        if(id<=0){
-            return false;
+    public void deleteCategory(Long id) {
+        try {
+            iCategoryRepository.deleteById(id);
+        } catch (NumberFormatException exception) {
+            throw new RuntimeException("Not a valid id" + exception.getMessage());
         }
-        else {iCategoryRepository.deleteById(id); return true;}
     }
 
     @Override
-    public boolean deleteCategory(String name) {
-        if (name != null) {
+    public void deleteCategory(String name) {
+        try {
             iCategoryRepository.deleteCategoryByName(name);
-            return true;
-        } else
-            return false;
+        } catch (NumberFormatException exception) {
+            throw new RuntimeException("Not a valid name" + exception.getMessage());
+        }
     }
 }

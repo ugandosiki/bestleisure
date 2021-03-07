@@ -2,6 +2,7 @@ package com.bestleisure.backend.service;
 
 import com.bestleisure.backend.model.Image;
 import com.bestleisure.backend.repository.IImageRepository;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,7 +15,11 @@ public class ImageService implements IImageService {
 
     @Override
     public void saveImage(Image image) {
-        iImageRepository.save(image);
+        try {
+            iImageRepository.save(image);
+        } catch (Exception exception) {
+            throw new RuntimeException("Could not store the file. Error: " + exception.getMessage());
+        }
     }
 
     @Override

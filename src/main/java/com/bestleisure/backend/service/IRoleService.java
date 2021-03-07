@@ -6,11 +6,11 @@ import java.util.List;
 
 
 public interface IRoleService{
-    boolean createRole(Role role);
+    void createRole(Role role);
     Role getOneRole(Long id);
     Role getRoleByName(String name);
     List<Role> getAllRoles();
-    boolean deleteRole(Long id);
-    boolean deleteRole(String name);
+    void deleteRole(Long id);
+    void deleteRole(String name);
     void deleteAllRoles();
 }

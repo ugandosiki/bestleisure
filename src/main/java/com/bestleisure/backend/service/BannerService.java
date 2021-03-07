@@ -2,11 +2,13 @@ package com.bestleisure.backend.service;
 
 import com.bestleisure.backend.model.Banner;
 import com.bestleisure.backend.repository.IBannerRepository;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
-public class BannerService implements IBannerService{
+public class BannerService implements IBannerService {
     final IBannerRepository iBannerRepository;
 
     public BannerService(IBannerRepository iBannerRepository) {
@@ -14,12 +16,12 @@ public class BannerService implements IBannerService{
     }
 
     @Override
-    public boolean createBanner(Banner Banner) {
-        if(Banner != null){
-            iBannerRepository.save(Banner);
-            return true;
+    public void createBanner(Banner banner) {
+        try {
+            iBannerRepository.save(banner);
+        } catch (ObjectNotFoundException exception) {
+            throw new RuntimeException("Not a banner" + exception.getMessage());
         }
-        else return false;
     }
 
     @Override
@@ -38,19 +40,20 @@ public class BannerService implements IBannerService{
     }
 
     @Override
-    public boolean deleteBanner(Long id) {
-        if(id<=0){
-            return false;
+    public void deleteBanner(Long id) {
+        try {
+            iBannerRepository.deleteById(id);
+        } catch (NumberFormatException exception) {
+            throw new RuntimeException("Not a valid id" + exception.getMessage());
         }
-        else {iBannerRepository.deleteById(id); return true;}
     }
 
     @Override
-    public boolean deleteBanner(String title) {
-        if (title != null) {
+    public void deleteBanner(String title) {
+        try {
             iBannerRepository.deleteBannerByTitle(title);
-            return true;
-        } else
-            return false;
+        } catch (NumberFormatException exception) {
+            throw new RuntimeException("Not a valid title" + exception.getMessage());
+        }
     }
 }

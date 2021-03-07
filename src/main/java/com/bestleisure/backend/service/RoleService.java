@@ -16,13 +16,11 @@ public class RoleService implements IRoleService {
     }
 
     @Override
-    public boolean createRole(Role role) throws ObjectNotFoundException {
+    public void createRole(Role role) throws ObjectNotFoundException {
         try {
             iRoleRepository.save(role);
-            return true;
         } catch (ObjectNotFoundException e) {
-            System.out.println(e.getMessage());
-            return false;
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -42,24 +40,20 @@ public class RoleService implements IRoleService {
     }
 
     @Override
-    public boolean deleteRole(Long id) throws IllegalArgumentException {
+    public void deleteRole(Long id) throws IllegalArgumentException {
         try {
             iRoleRepository.deleteById(id);
-            return true;
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return false;
+            throw new RuntimeException(e.getMessage());
         }
     }
 
     @Override
-    public boolean deleteRole(String name) throws IllegalArgumentException {
+    public void deleteRole(String name) throws IllegalArgumentException {
         try {
             iRoleRepository.deleteByName(name);
-            return true;
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return false;
+            throw new RuntimeException(e.getMessage());
         }
     }
 

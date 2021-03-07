@@ -2,9 +2,11 @@ package com.bestleisure.backend.service;
 
 import com.bestleisure.backend.model.Post;
 import com.bestleisure.backend.repository.IPostRepository;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class PostService implements IPostService {
     final IPostRepository iPostRepository;
@@ -14,12 +16,12 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public boolean createPost(Post post) {
-        if(post != null){
+    public void createPost(Post post) {
+        try {
             iPostRepository.save(post);
-            return true;
+        } catch (ObjectNotFoundException exception) {
+            throw new RuntimeException(exception.getMessage());
         }
-        else return false;
     }
 
     @Override
@@ -38,19 +40,20 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public boolean deletePost(Long id) {
-        if(id<=0){
-            return false;
+    public void deletePost(Long id) {
+        try {
+            iPostRepository.deleteById(id);
+        } catch (NumberFormatException exception) {
+            throw new RuntimeException(exception.getCause());
         }
-        else {iPostRepository.deleteById(id); return true;}
     }
 
     @Override
-    public boolean deletePost(String title) {
-        if (title != null) {
+    public void deletePost(String title) {
+        try {
             iPostRepository.deletePostByTitle(title);
-            return true;
-        } else
-            return false;
+        } catch (NumberFormatException exception) {
+            throw new RuntimeException(exception.getMessage());
+        }
     }
 }

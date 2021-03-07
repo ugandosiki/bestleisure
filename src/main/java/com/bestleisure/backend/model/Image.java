@@ -35,6 +35,16 @@ public class Image {
         this.path = path;
     }
 
+    public Image(String path, Post post_id) {
+        this.path = path;
+        this.post_id = post_id;
+    }
+
+    public Image(String path, Banner banner_id) {
+        this.path = path;
+        this.banner_id = banner_id;
+    }
+
     public Long getId() {
         return this.id;
     }

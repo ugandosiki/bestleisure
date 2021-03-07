@@ -24,16 +24,11 @@ public class Post {
     @Column(name = "description")
     private String description;
 
-    public Integer getLikes() {
-        return likes;
-    }
-
-    public void setLikes(Integer likes) {
-        this.likes = likes;
-    }
-
     @Column(name = "likes")
     private Integer likes;
+
+    @Column(name = "image_id")
+    private Integer image_id;
 
     @JsonManagedReference
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
@@ -63,13 +58,15 @@ public class Post {
     public Post() {
     }
 
-    public Post(Long id, String title, String description, Category category_id, SubCategory subCategory_id, User user_id) {
+    public Post(Long id, String title, String description, Category category_id, SubCategory subCategory_id, User user_id, Integer likes, Integer image_id) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.category_id = category_id;
         this.subCategory_id = subCategory_id;
         this.user_id = user_id;
+        this.likes = likes;
+        this.image_id = image_id;
     }
 
     public List<Banner> getBanners() {
@@ -126,6 +123,30 @@ public class Post {
 
     public void setUser_id(User user_id) {
         this.user_id = user_id;
+    }
+
+    public Integer getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Integer likes) {
+        this.likes = likes;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+
+    public Integer getImage_id() {
+        return image_id;
+    }
+
+    public void setImage_id(Integer image_id) {
+        this.image_id = image_id;
     }
 }
 

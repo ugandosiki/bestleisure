@@ -6,10 +6,10 @@ import com.bestleisure.backend.model.User;
 import java.util.List;
 
 public interface IUserService {
-    boolean createUser(User user);
+    void createUser(User user);
     User getOneUser(Long id);
     User getUserByName(String name);
     List<User> getAllUsers();
-    boolean deleteUser(Long id);
-    boolean deleteUser(String name);
+    void deleteUser(Long id);
+    void deleteUser(String name);
 }

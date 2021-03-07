@@ -16,13 +16,11 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public boolean createUser(User user) throws ObjectNotFoundException {
+    public void createUser(User user) throws ObjectNotFoundException {
         try {
             iUserRepository.save(user);
-            return true;
         } catch (ObjectNotFoundException e) {
-            System.out.println(e.getMessage());
-            return false;
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -42,26 +40,22 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public boolean deleteUser(Long id) throws IllegalArgumentException {
+    public void deleteUser(Long id) throws IllegalArgumentException {
         try{
             iUserRepository.deleteById(id);
-            return true;
         }
         catch (IllegalArgumentException e){
-            System.out.println(e.getMessage());
-            return false;
+            throw new RuntimeException(e.getMessage());
         }
     }
 
     @Override
-    public boolean deleteUser(String name)throws IllegalArgumentException {
+    public void deleteUser(String name)throws IllegalArgumentException {
         try{
             iUserRepository.deleteUserByName(name);
-            return true;
         }
         catch (IllegalArgumentException e){
-            System.out.println(e.getMessage());
-            return false;
+            throw new RuntimeException(e.getMessage());
         }
     }
 }

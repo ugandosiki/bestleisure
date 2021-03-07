@@ -1,24 +1,22 @@
 package com.bestleisure.backend.service;
 
+import com.bestleisure.backend.model.SubCategory;
 import com.bestleisure.backend.repository.ISubCategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class SubCategoryService implements ISubCategoryService {
-   final ISubCategoryRepository iSubCategoryRepository;
+    final ISubCategoryRepository iSubCategoryRepository;
 
     public SubCategoryService(ISubCategoryRepository iSubCategoryRepository) {
         this.iSubCategoryRepository = iSubCategoryRepository;
     }
 
     @Override
-    public boolean createSubCategory(com.bestleisure.backend.model.SubCategory subCategory) {
-        if(subCategory != null){
-            iSubCategoryRepository.save(subCategory);
-            return true;
-        }
-        else return false;
+    public void createSubCategory(SubCategory subCategory) {
+        iSubCategoryRepository.save(subCategory);
     }
 
     @Override
@@ -37,19 +35,12 @@ public class SubCategoryService implements ISubCategoryService {
     }
 
     @Override
-    public boolean deleteSubCategory(Long id) {
-        if(id<=0){
-            return false;
-        }
-        else {iSubCategoryRepository.deleteById(id); return true;}
+    public void deleteSubCategory(Long id) {
+        iSubCategoryRepository.deleteById(id);
     }
 
     @Override
-    public boolean deleteSubCategory(String name) {
-        if (name != null) {
-            iSubCategoryRepository.deleteSubCategoryByName(name);
-            return true;
-        } else
-            return false;
+    public void deleteSubCategory(String name) {
+        iSubCategoryRepository.deleteSubCategoryByName(name);
     }
 }

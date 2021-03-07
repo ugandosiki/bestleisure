@@ -17,8 +17,8 @@ public class UserController {
 
     @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping("add")
-    public boolean addUser(User user) {
-        return userService.createUser(user);
+    public void addUser(User user) {
+         userService.createUser(user);
     }
 
     @CrossOrigin(origins = "http://localhost:8081")
@@ -35,13 +35,13 @@ public class UserController {
 
     @CrossOrigin(origins = "http://localhost:8081")
     @DeleteMapping("delete/{id}")
-    public boolean deleteUserById(@PathVariable Long id) {
-        return userService.deleteUser(id);
+    public void deleteUserById(@PathVariable Long id) {
+         userService.deleteUser(id);
     }
 
     @CrossOrigin(origins = "http://localhost:8081")
     @DeleteMapping("delete/{name}")
-    public boolean deleteUserByName(@PathVariable String name) {
-        return userService.deleteUser(name);
+    public void deleteUserByName(@PathVariable String name) {
+         userService.deleteUser(name);
     }
 }
