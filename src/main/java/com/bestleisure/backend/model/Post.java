@@ -66,7 +66,6 @@ public class Post {
         this.subCategory_id = subCategory_id;
         this.user_id = user_id;
         this.likes = likes;
-        this.image_id = image_id;
     }
 
     public List<Banner> getBanners() {

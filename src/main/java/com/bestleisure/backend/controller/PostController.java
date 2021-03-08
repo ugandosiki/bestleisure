@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping("posts")
 public class PostController {
@@ -26,7 +26,7 @@ public class PostController {
         this.imageController = imageController;
     }
 
-    @CrossOrigin(origins = "http://localhost:8081")
+
     @PostMapping("add")
     public ResponseEntity<ResponseMessage> addPost(Post post, @RequestParam("file") MultipartFile file) throws IOException {
         if (file.isEmpty()) {
@@ -38,13 +38,13 @@ public class PostController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:8081")
+
     @GetMapping("get")
     public List<Post> getAllPosts() {
         return postService.getAllPost();
     }
 
-    @CrossOrigin(origins = "http://localhost:8081")
+
     @GetMapping("get/{id}")
     public Post getPost(@PathVariable Long id) {
         return postService.getOnePost(id);
