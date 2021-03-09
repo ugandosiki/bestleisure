@@ -1,5 +1,6 @@
 package com.bestleisure.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -18,7 +19,7 @@ public class Image {
     @Column(name = "path", unique = true)
     private String path;
 
-    @JsonManagedReference
+    @JsonBackReference
     @ManyToOne(optional = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private Post post_id;

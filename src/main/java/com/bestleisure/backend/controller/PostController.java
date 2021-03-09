@@ -34,11 +34,16 @@ public class PostController {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage("File is empty"));
         } else {
             postService.createPost(post);
+
+
             FileUploadUtil.upload(file, post);
+
             imageService.saveImage(image);
             Image currentImg = imageService.getOneImage(image.getId());
+            currentImg.setPost_id(post);
             currentImg.setPath("Post_" + post.getId() + "_" + post.getTitle() + ".jpg");
             imageService.saveImage(currentImg);
+
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("File " + file.getOriginalFilename() + " was successfully uploaded!"));
         }
     }
@@ -51,7 +56,8 @@ public class PostController {
 
 
     @GetMapping("get/{id}")
-    public Post getPost(@PathVariable Long id) {
-        return postService.getOnePost(id);
+    public List<Image> getPost(@PathVariable Long id) {
+
+        return postService.getOnePost(id).getImages();
     }
 }

@@ -28,7 +28,7 @@ public class Post {
     private Integer likes;
 
     @Column(name = "image_id")
-    private Integer image_id;
+    private Long image_id;
 
     @JsonManagedReference
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
@@ -50,15 +50,14 @@ public class Post {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Banner> banners;
 
-    @JsonBackReference
+    @JsonManagedReference
     @OneToMany(mappedBy = "post_id")
-    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Image> images;
 
     public Post() {
     }
 
-    public Post(Long id, String title, String description, Category category_id, SubCategory subCategory_id, User user_id, Integer likes, Integer image_id) {
+    public Post(Long id, String title, String description, Category category_id, SubCategory subCategory_id, User user_id, Integer likes) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -140,11 +139,11 @@ public class Post {
         this.images = images;
     }
 
-    public Integer getImage_id() {
+    public Long getImage_id() {
         return image_id;
     }
 
-    public void setImage_id(Integer image_id) {
+    public void setImage_id(Long image_id) {
         this.image_id = image_id;
     }
 }
