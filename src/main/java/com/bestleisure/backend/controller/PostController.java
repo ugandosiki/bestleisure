@@ -19,12 +19,11 @@ import java.util.List;
 public class PostController {
     final PostService postService;
     final ImageService imageService;
-    final ImageController imageController;
 
-    public PostController(PostService postService, ImageService imageService, ImageController<Post> imageController) {
+    public PostController(PostService postService, ImageService imageService) {
         this.postService = postService;
         this.imageService = imageService;
-        this.imageController = imageController;
+
     }
 
 
