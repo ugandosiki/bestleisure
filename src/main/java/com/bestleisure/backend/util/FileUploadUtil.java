@@ -4,6 +4,7 @@ import com.bestleisure.backend.message.ResponseMessage;
 import com.bestleisure.backend.model.Banner;
 import com.bestleisure.backend.model.Image;
 import com.bestleisure.backend.model.Post;
+import com.bestleisure.backend.repository.IImageRepository;
 import com.bestleisure.backend.service.ImageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +18,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-public  class FileUploadUtil {
+public class FileUploadUtil {
     static ImageService imageService;
+
 
     public FileUploadUtil(ImageService imageService) {
         FileUploadUtil.imageService = imageService;
@@ -44,11 +46,9 @@ public  class FileUploadUtil {
     public static ResponseEntity<ResponseMessage> upload(@RequestParam("file") MultipartFile file, Post post) {
         String message = "";
         try {
-            String filename = "Post_"+  post.getId()+"_"+post.getTitle()+".jpg";
+            String filename = "Post_" + post.getId() + "_" + post.getTitle() + ".jpg";
             String uploadDir = "uploads/";
             FileUploadUtil.saveFile(uploadDir, filename, file);
-            Image image = new Image(filename);
-            imageService.saveImage(image);
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
         } catch (Exception exception) {
@@ -61,10 +61,11 @@ public  class FileUploadUtil {
         String message = "";
         String uploadDir = "uploads/";
         try {
-            String filename = "Banner_"+  banner.getId()+"_"+banner.getTitle()+".jpg";
+            String filename = "Banner_" + banner.getId() + "_" + banner.getTitle() + ".jpg";
             FileUploadUtil.saveFile(uploadDir, filename, file);
             Image image = new Image(filename);
             imageService.saveImage(image);
+
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
         } catch (Exception exception) {

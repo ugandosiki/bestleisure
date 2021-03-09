@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 
-@JsonIgnoreProperties
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "images")
 public class Image {

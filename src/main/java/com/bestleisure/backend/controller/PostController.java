@@ -1,6 +1,7 @@
 package com.bestleisure.backend.controller;
 
 import com.bestleisure.backend.message.ResponseMessage;
+import com.bestleisure.backend.model.Image;
 import com.bestleisure.backend.model.Post;
 import com.bestleisure.backend.service.ImageService;
 import com.bestleisure.backend.service.PostService;
@@ -28,12 +29,16 @@ public class PostController {
 
 
     @PostMapping("add")
-    public ResponseEntity<ResponseMessage> addPost(Post post, @RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity<ResponseMessage> addPost(Post post, Image image, @RequestParam("file") MultipartFile file) throws IOException {
         if (file.isEmpty()) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage("File is empty"));
         } else {
             postService.createPost(post);
             FileUploadUtil.upload(file, post);
+            imageService.saveImage(image);
+            Image currentImg = imageService.getOneImage(image.getId());
+            currentImg.setPath("Post_" + post.getId() + "_" + post.getTitle() + ".jpg");
+            imageService.saveImage(currentImg);
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("File " + file.getOriginalFilename() + " was successfully uploaded!"));
         }
     }

@@ -23,6 +23,11 @@ public class ImageService implements IImageService {
     }
 
     @Override
+    public Image getOneImage(Long id) {
+            return iImageRepository.getOne(id);
+    }
+
+    @Override
     public void deleteImage() {
 
     }
