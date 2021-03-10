@@ -1,6 +1,7 @@
 package com.bestleisure.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.LazyCollection;
@@ -45,10 +46,10 @@ public class Post {
     @JoinColumn(name = "subcategory_id")
     private SubCategory subCategory_id;
 
-    @JsonBackReference
+    @JsonManagedReference
     @OneToMany(mappedBy = "post_id")
-    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Banner> banners;
+
 
     @JsonManagedReference
     @OneToMany(mappedBy = "post_id")

@@ -57,8 +57,7 @@ CREATE TABLE IF NOT EXISTS banners
     title       VARCHAR(250) UNIQUE NOT NULL,
     description TEXT,
     created_at  TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (post_id) REFERENCES posts (id),
-    FOREIGN KEY (image_id) REFERENCES images (id)
+    FOREIGN KEY (post_id) REFERENCES posts (id)
 );
 ALTER TABLE images
     ADD post_id INTEGER NULL
@@ -66,3 +65,4 @@ ALTER TABLE images
 ALTER TABLE images
     ADD banner_id INTEGER NULL
         REFERENCES banners (id);
+

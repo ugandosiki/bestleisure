@@ -26,25 +26,24 @@ public class Banner {
     @Column(name = "image_id")
     private Integer image_id;
 
-    @JsonManagedReference
+    @JsonBackReference
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private Post post_id;
 
-    @JsonBackReference
+
+    @JsonManagedReference
     @OneToMany(mappedBy = "banner_id")
     private List<Image> images;
-
 
     public Banner() {
     }
 
-    public Banner(Long id, String title, String description, Post post_id, Integer image_id) {
+    public Banner(Long id, String title, String description, Post post_id) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.post_id = post_id;
-        this.image_id = image_id;
     }
 
     public Long getId() {
