@@ -1,12 +1,13 @@
 package com.bestleisure.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer"})
+
 @Entity
 @Table(name = "images")
 public class Image {
@@ -24,7 +25,7 @@ public class Image {
     @JoinColumn(name = "post_id")
     private Post post;
 
-    @JsonManagedReference
+    @JsonBackReference
     @ManyToOne(optional = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "banner")
     private Banner banner;

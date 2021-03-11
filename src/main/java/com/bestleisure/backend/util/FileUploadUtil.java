@@ -63,8 +63,6 @@ public class FileUploadUtil {
         try {
             String filename = "Banner_" + banner.getId() + "_" + banner.getTitle() + ".jpg";
             FileUploadUtil.saveFile(uploadDir, filename, file);
-            Image image = new Image(filename);
-            imageService.saveImage(image);
 
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
