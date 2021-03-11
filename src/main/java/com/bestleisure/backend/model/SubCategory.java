@@ -24,20 +24,20 @@ public class SubCategory {
     @JsonManagedReference
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
-    private Category category_id;
+    private Category category;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "subCategory_id")
+    @OneToMany(mappedBy = "subCategory")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Post> posts;
 
     public SubCategory() {
     }
 
-    public SubCategory(Long id, String name, Category category_id) {
+    public SubCategory(Long id, String name, Category category) {
         this.id = id;
         this.name = name;
-        this.category_id = category_id;
+        this.category = category;
     }
 
     public Long getId() {
@@ -56,11 +56,11 @@ public class SubCategory {
         this.name = name;
     }
 
-    public Category getCategory_id() {
-        return category_id;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategory_id(Category category_id) {
-        this.category_id = category_id;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

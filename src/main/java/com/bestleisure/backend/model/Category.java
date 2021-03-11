@@ -2,12 +2,10 @@ package com.bestleisure.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
@@ -24,12 +22,12 @@ public class Category {
     private String name;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "category_id")
+    @OneToMany(mappedBy = "category")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<SubCategory> subCategories;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "category_id")
+    @OneToMany(mappedBy = "category")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Post> posts;
 

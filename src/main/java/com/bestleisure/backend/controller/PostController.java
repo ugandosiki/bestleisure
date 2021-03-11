@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping("posts")
@@ -34,12 +35,11 @@ public class PostController {
         } else {
             postService.createPost(post);
 
-
             FileUploadUtil.upload(file, post);
 
             imageService.saveImage(image);
             Image currentImg = imageService.getOneImage(image.getId());
-            currentImg.setPost_id(post);
+            currentImg.setPost(post);
             currentImg.setPath("Post_" + post.getId() + "_" + post.getTitle() + ".jpg");
             imageService.saveImage(currentImg);
 
@@ -55,8 +55,8 @@ public class PostController {
 
 
     @GetMapping("get/{id}")
-    public List<Image> getPost(@PathVariable Long id) {
+    public Post getPost(@PathVariable Long id) {
 
-        return postService.getOnePost(id).getImages();
+        return postService.getOnePost(id);
     }
 }

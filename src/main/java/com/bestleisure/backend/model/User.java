@@ -30,24 +30,24 @@ public class User {
     private String password;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "user_id")
+    @OneToMany(mappedBy = "user")
     private List<Post> posts;
 
     @JsonManagedReference
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")
-    private Role role_id;
+    private Role role;
 
     public  User(){
 
     }
 
-    public User(Long id, String name, String email, String password, Role role_id) {
+    public User(Long id, String name, String email, String password, Role role) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
-        this.role_id = role_id;
+        this.role = role;
     }
 
     public Long getId() {
@@ -82,11 +82,11 @@ public class User {
         this.password = password;
     }
 
-    public Role getRole_id() {
-        return role_id;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRole_id(Role role_id) {
-        this.role_id = role_id;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

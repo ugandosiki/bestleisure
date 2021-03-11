@@ -2,13 +2,8 @@ package com.bestleisure.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import net.minidev.json.annotate.JsonIgnore;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
@@ -24,7 +19,7 @@ public class Role {
     private String name;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "role_id")
+    @OneToMany(mappedBy = "role")
     private List<User> users;
 
     public Role() {

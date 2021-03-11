@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping("users")
 public class UserController {
@@ -15,33 +16,40 @@ public class UserController {
         this.userService = userService;
     }
 
-    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping("add")
     public void addUser(User user) {
-         userService.createUser(user);
+        userService.createUser(user);
     }
 
-    @CrossOrigin(origins = "http://localhost:8081")
     @GetMapping("getAll")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    @CrossOrigin(origins = "http://localhost:8081")
     @GetMapping("get/{id}")
     public User getUserById(@PathVariable long id) {
         return userService.getOneUser(id);
     }
 
-    @CrossOrigin(origins = "http://localhost:8081")
     @DeleteMapping("delete/{id}")
     public void deleteUserById(@PathVariable Long id) {
-         userService.deleteUser(id);
+        userService.deleteUser(id);
     }
 
-    @CrossOrigin(origins = "http://localhost:8081")
     @DeleteMapping("delete/{name}")
     public void deleteUserByName(@PathVariable String name) {
-         userService.deleteUser(name);
+        userService.deleteUser(name);
+    }
+
+    //Testing auth
+    @GetMapping("admin/get")
+    public String getAdmin() {
+        return "Hello admin";
+    }
+
+    @GetMapping("user/get")
+    public String getUser() {
+        return "Hello user";
+
     }
 }

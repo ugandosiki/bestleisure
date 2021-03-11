@@ -22,12 +22,12 @@ public class Image {
     @JsonBackReference
     @ManyToOne(optional = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
-    private Post post_id;
+    private Post post;
 
     @JsonManagedReference
     @ManyToOne(optional = true, cascade = CascadeType.ALL)
-    @JoinColumn(name = "banner_id")
-    private Banner banner_id;
+    @JoinColumn(name = "banner")
+    private Banner banner;
 
     public Image() {
     }
@@ -36,14 +36,14 @@ public class Image {
         this.path = path;
     }
 
-    public Image(String path, Post post_id) {
+    public Image(String path, Post post) {
         this.path = path;
-        this.post_id = post_id;
+        this.post = post;
     }
 
-    public Image(String path, Banner banner_id) {
+    public Image(String path, Banner banner) {
         this.path = path;
-        this.banner_id = banner_id;
+        this.banner = banner;
     }
 
     public Long getId() {
@@ -62,19 +62,19 @@ public class Image {
         this.path = path;
     }
 
-    public Post getPost_id() {
-        return this.post_id;
+    public Post getPost() {
+        return this.post;
     }
 
-    public void setPost_id(Post post_id) {
-        this.post_id = post_id;
+    public void setPost(Post post) {
+        this.post = post;
     }
 
-    public Banner getBanner_id() {
-        return this.banner_id;
+    public Banner getBanner() {
+        return this.banner;
     }
 
-    public void setBanner_id(Banner banner_id) {
-        this.banner_id = banner_id;
+    public void setBanner(Banner banner) {
+        this.banner = banner;
     }
 }

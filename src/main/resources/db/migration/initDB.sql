@@ -7,12 +7,12 @@ CREATE TABLE IF NOT EXISTS roles
 CREATE TABLE IF NOT EXISTS users
 (
     id         BIGSERIAL PRIMARY KEY,
-    role_id    INTEGER      NOT NULL,
+    role       INTEGER      NOT NULL,
     name       VARCHAR(200) NOT NULL,
     email      VARCHAR(200) NOT NULL UNIQUE,
     password   VARCHAR(50)  NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (role_id) REFERENCES roles (id)
+    FOREIGN KEY (role) REFERENCES roles (id)
 
 );
 CREATE TABLE IF NOT EXISTS categories
@@ -23,11 +23,11 @@ CREATE TABLE IF NOT EXISTS categories
 );
 CREATE TABLE IF NOT EXISTS subCategories
 (
-    id          BIGSERIAL PRIMARY KEY,
-    name        VARCHAR(100) UNIQUE,
-    category_id INTEGER,
-    created_at  TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (category_id) REFERENCES categories (id)
+    id         BIGSERIAL PRIMARY KEY,
+    name       VARCHAR(100) UNIQUE,
+    category   INTEGER,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (category) REFERENCES categories (id)
 );
 CREATE TABLE IF NOT EXISTS images
 (
@@ -37,32 +37,32 @@ CREATE TABLE IF NOT EXISTS images
 );
 CREATE TABLE IF NOT EXISTS posts
 (
-    id             BIGSERIAL PRIMARY KEY,
-    user_id        INTEGER,
-    category_id    INTEGER,
-    subCategory_id INTEGER,
-    title          VARCHAR(250) UNIQUE NOT NULL,
-    description    TEXT,
-    likes          INTEGER,
-    created_at     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (category_id) REFERENCES categories (id),
-    FOREIGN KEY (subCategory_id) REFERENCES subCategories (id),
-    FOREIGN KEY (user_id) REFERENCES users (id)
+    id          BIGSERIAL PRIMARY KEY,
+    user        INTEGER,
+    category    INTEGER,
+    subCategory INTEGER,
+    title       VARCHAR(250) UNIQUE NOT NULL,
+    description TEXT,
+    likes       INTEGER,
+    created_at  TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (category) REFERENCES categories (id),
+    FOREIGN KEY (subCategory) REFERENCES subCategories (id),
+    FOREIGN KEY (user) REFERENCES users (id)
 );
 CREATE TABLE IF NOT EXISTS banners
 (
     id          BIGSERIAL PRIMARY KEY,
-    post_id     INTEGER,
+    post        INTEGER,
     image_id    INTEGER,
     title       VARCHAR(250) UNIQUE NOT NULL,
     description TEXT,
     created_at  TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (post_id) REFERENCES posts (id),
+    FOREIGN KEY (post) REFERENCES posts (id),
     FOREIGN KEY (image_id) REFERENCES images (id)
 );
 ALTER TABLE images
-    ADD post_id INTEGER NULL
+    ADD post INTEGER NULL
         REFERENCES posts (id);
 ALTER TABLE images
-    ADD banner_id INTEGER NULL
+    ADD banner INTEGER NULL
         REFERENCES banners (id);
