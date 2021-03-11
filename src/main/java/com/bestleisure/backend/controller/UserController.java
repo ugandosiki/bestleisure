@@ -17,8 +17,12 @@ public class UserController {
     }
 
     @PostMapping("add")
-    public void addUser(User user) {
-        userService.createUser(user);
+    public void addUser(RegistrationRequest user) {
+        User u = new User();
+        u.setName(user.getName());
+        u.setEmail(user.getEmail());
+        u.setPassword(user.getPassword());
+        userService.createUser(u);
     }
 
     @GetMapping("getAll")
@@ -41,15 +45,5 @@ public class UserController {
         userService.deleteUser(name);
     }
 
-    //Testing auth
-    @GetMapping("admin/get")
-    public String getAdmin() {
-        return "Hello admin";
-    }
 
-    @GetMapping("user/get")
-    public String getUser() {
-        return "Hello user";
-
-    }
 }

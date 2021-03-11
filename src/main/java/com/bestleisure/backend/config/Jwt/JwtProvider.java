@@ -1,8 +1,6 @@
 package com.bestleisure.backend.config.Jwt;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +27,14 @@ public class JwtProvider {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
             return true;
+        } catch (ExpiredJwtException expEx) {
+            log.severe("Token expired");
+        } catch (UnsupportedJwtException unsEx) {
+            log.severe("Unsupported jwt");
+        } catch (MalformedJwtException mjEx) {
+            log.severe("Malformed jwt");
+        } catch (SignatureException sEx) {
+            log.severe("Invalid signature");
         } catch (Exception exception) {
             log.severe("Invalid token");
         }

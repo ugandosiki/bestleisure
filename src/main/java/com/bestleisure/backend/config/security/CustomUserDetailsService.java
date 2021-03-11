@@ -9,14 +9,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
-    private UserService userService;
+    private final UserService userService;
 
     public CustomUserDetailsService(UserService userService) {
         this.userService = userService;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public CustomUserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userService.findByEmail(email);
         return CustomUserDetails.fromUserToCustomUserDetails(user);
     }

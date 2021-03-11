@@ -1,7 +1,6 @@
 package com.bestleisure.backend.model;
 
 
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -38,7 +37,7 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    public  User(){
+    public User() {
 
     }
 
@@ -48,6 +47,12 @@ public class User {
         this.email = email;
         this.password = password;
         this.role = role;
+    }
+
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
     }
 
     public Long getId() {

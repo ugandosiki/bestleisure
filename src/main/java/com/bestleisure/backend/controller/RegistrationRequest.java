@@ -6,9 +6,10 @@ import lombok.Data;
 @Data
 public class RegistrationRequest {
     @NotNull
+    private String name;
+    @NotNull
     private String email;
     @NotNull
     private String password;
-    @NotNull
-    private String name;
+
 }

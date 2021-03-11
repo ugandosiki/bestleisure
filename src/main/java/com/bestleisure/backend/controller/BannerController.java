@@ -35,7 +35,7 @@ public class BannerController {
             FileUploadUtil.upload(file, banner);
             imageService.saveImage(image);
             Image currentImg = imageService.getOneImage(image.getId());
-            currentImg.setBanner_id(banner);
+            currentImg.setBanner(banner);
             currentImg.setPath("Banner_" + banner.getId() + "_" + banner.getTitle() + ".jpg");
             imageService.saveImage(currentImg);
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("File " + file.getOriginalFilename() + " was successfully uploaded!"));

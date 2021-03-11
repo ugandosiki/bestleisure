@@ -1,6 +1,6 @@
 INSERT INTO roles(name)
-VALUES ('admin'),
-       ('user');
+VALUES ('ROLE_ADMIN'),
+       ('ROLE_USER');
 INSERT INTO users(role_id, name, email, password)
 VALUES (1, 'Eugene', 'qwerty12345@gmail.com', 'password'),
        (1, 'Vladik', 'qwrqwrqw@gmail.com', 'password'),

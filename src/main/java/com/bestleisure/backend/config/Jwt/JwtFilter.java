@@ -2,7 +2,6 @@ package com.bestleisure.backend.config.Jwt;
 
 import com.bestleisure.backend.config.security.CustomUserDetails;
 import com.bestleisure.backend.config.security.CustomUserDetailsService;
-import io.jsonwebtoken.lang.Strings;
 import lombok.extern.java.Log;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +15,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+import static org.springframework.util.StringUtils.hasText;
 @Component
 @Log
 public class JwtFilter extends GenericFilterBean {
@@ -36,15 +36,16 @@ public class JwtFilter extends GenericFilterBean {
         String token = getTokenFromRequest((HttpServletRequest) servletRequest);
         if (token != null && jwtProvider.validateToken(token)) {
             String userEmail = jwtProvider.getEmailFromToken(token);
-            CustomUserDetails customUserDetails = (CustomUserDetails) customUserDetailsService.loadUserByUsername(userEmail);
+            CustomUserDetails customUserDetails = customUserDetailsService.loadUserByUsername(userEmail);
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }
+        filterChain.doFilter(servletRequest,servletResponse);
     }
 
     private String getTokenFromRequest(HttpServletRequest request) {
         String bearer = request.getHeader(AUTHORIZATION);
-        if (Strings.hasText(bearer) && bearer.startsWith("Bearer ")) {
+        if (hasText(bearer) && bearer.startsWith("Bearer ")) {
             return bearer.substring(7);
         }
         return null;

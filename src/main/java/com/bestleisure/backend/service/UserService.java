@@ -22,7 +22,6 @@ public class UserService implements IUserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-
     @Override
     public void createUser(User user) {
         try {

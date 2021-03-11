@@ -19,17 +19,17 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@RequestBody RegistrationRequest registrationRequest) {
-        User user = new User();
-        user.setName(registrationRequest.getName());
-        user.setPassword(registrationRequest.getPassword());
-        user.setEmail(registrationRequest.getEmail());
-        userService.createUser(user);
+    public String registerUser(RegistrationRequest registrationRequest) {
+        User u = new User();
+        u.setName(registrationRequest.getName());
+        u.setEmail(registrationRequest.getEmail());
+        u.setPassword(registrationRequest.getPassword());
+        userService.createUser(u);
         return "Ok";
     }
 
     @PostMapping("/auth")
-    public AuthResponse auth(@RequestBody AuthRequest authRequest) {
+    public AuthResponse auth( AuthRequest authRequest) {
         User user = userService.findByEmailAndPassword(authRequest.getEmail(), authRequest.getPassword());
         String token = jwtProvider.generateToken(user.getEmail());
         return new AuthResponse(token);
