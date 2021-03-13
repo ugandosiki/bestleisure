@@ -1,5 +1,5 @@
 <template>
-  <div class="main_layout">
+  <div class="main_layout" :style="{'background-image': `url(${require('@/assets/bananas.png')})`}">
     <nav class="desc_nav shadow-2">
       <ul>
         <router-link
@@ -75,11 +75,10 @@ export default {
   display: none;
 }
 .active_r_link {
-  background-color: #6d8890;
+  background-color: #0080E3;
 }
 .main_layout {
   min-height: 100vh;
-  background-color: #e7ebff;
 }
 .desc_nav {
   background-color: #07a7a7;
@@ -110,7 +109,7 @@ export default {
   justify-content: center;
 }
 .desc_nav ul li:hover {
-  background-color: #6d8890;
+  background-color: #0080E3;
   transition-duration: 0.3s;
 }
 .desc_nav ul li {
@@ -121,6 +120,8 @@ export default {
 @media (max-width: 770px) {
   .mobile_nav {
     display: block;
+    position: relative;
+    z-index: 99999;
   }
   .mobile_nav a {
     color: white;

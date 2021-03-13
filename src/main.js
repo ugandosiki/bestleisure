@@ -5,6 +5,9 @@ import router from './router'
 import store from './store'
 import './quasar'
 
+
+import Paginate from 'vuejs-paginate'
+Vue.component('Paginate', Paginate)
 Vue.config.productionTip = false
 
 new Vue({

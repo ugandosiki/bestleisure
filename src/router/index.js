@@ -21,7 +21,7 @@ const routes = [
       },
       {
         path: "catalog",
-        component: () => import('../views/pages/About.vue')
+        component: () => import('../views/pages/Catalog.vue')
       },
       {
         path: "cabinet",

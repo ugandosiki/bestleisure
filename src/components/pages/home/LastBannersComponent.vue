@@ -1,7 +1,7 @@
 <template>
-  <div class="interesting">
+<div class="last_banners">
     <div class="block_title">
-      <span>Самое интересное</span>
+      <span>Последние акции</span>
     </div>
     <div class="block_posts">
       <div class="post">
@@ -57,12 +57,12 @@
 
 <script>
 export default {
-  name: "InterestingComponent",
-};
+ name: "LastBannersComponent"
+}
 </script>
 
 <style scoped>
-.interesting {
+.last_banners {
   background-color: rgba(255, 255, 255, 0.7);
   width: 100%;
   position: relative;
@@ -118,8 +118,8 @@ export default {
 
   background: #0080e3;
 }
-.interesting:before,
-.interesting:after {
+.last_banners:before,
+.last_banners:after {
   border-color: transparent;
   -webkit-transition: all 0.25s;
   transition: all 0.25s;
@@ -130,24 +130,24 @@ export default {
   position: absolute;
   width: 40px;
 }
-.interesting:before {
+.last_banners:before {
   border-color: #0080e3;
   border-right-width: 4px;
   border-top-width: 4px;
   right: -5px;
   top: -5px;
 }
-.interesting:after {
+.last_banners:after {
   border-bottom-width: 4px;
   border-color: #0080e3;
   border-left-width: 4px;
   bottom: -5px;
   left: -5px;
 }
-.interesting:hover:before,
-.interesting.hover:before,
-.interesting:hover:after,
-.interesting.hover:after {
+.last_banners:hover:before,
+.last_banners.hover:before,
+.last_banners:hover:after,
+.last_banners.hover:after {
   height: 100%;
   width: 100%;
 }
@@ -169,7 +169,7 @@ export default {
   position: relative;
   z-index: 9999;
 }
-.interesting{
+.last_banners{
   padding-right: 20px;
 }
 }

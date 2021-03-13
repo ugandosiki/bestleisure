@@ -11,5 +11,5 @@ export default {
 </script>
 
 <style>
-
+@import url('https://fonts.googleapis.com/css2?family=Redressed&family=Roboto+Condensed:wght@300;700&display=swap');
 </style>
