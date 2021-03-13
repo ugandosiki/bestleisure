@@ -39,8 +39,7 @@
       <router-link
         to="/catalog"
         tag="a"
-        exact
-        exact-active-class="active_r_link"
+        active-class="active_r_link"
         >Каталог</router-link
       >
       <router-link
