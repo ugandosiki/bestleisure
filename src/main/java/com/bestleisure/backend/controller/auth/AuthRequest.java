@@ -1,6 +1,5 @@
-package com.bestleisure.backend.controller;
+package com.bestleisure.backend.controller.auth;
 
-import com.sun.istack.NotNull;
 import lombok.Data;
 
 @Data

@@ -25,8 +25,10 @@ public class UserService implements IUserService {
     @Override
     public void createUser(User user) {
         try {
-            Role userRole = iRoleRepository.findRoleByName("ROLE_USER");
-            user.setRole(userRole);
+            if (user.getRole().getId() == 1) {
+                Role userRole = iRoleRepository.findRoleByName("ROLE_USER");
+                user.setRole(userRole);
+            }
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             iUserRepository.save(user);
         } catch (Exception e) {

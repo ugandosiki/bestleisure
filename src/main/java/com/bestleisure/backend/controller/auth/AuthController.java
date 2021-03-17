@@ -1,10 +1,9 @@
-package com.bestleisure.backend.controller;
+package com.bestleisure.backend.controller.auth;
 
 import com.bestleisure.backend.config.Jwt.JwtProvider;
 import com.bestleisure.backend.model.User;
 import com.bestleisure.backend.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -24,6 +23,7 @@ public class AuthController {
         u.setName(registrationRequest.getName());
         u.setEmail(registrationRequest.getEmail());
         u.setPassword(registrationRequest.getPassword());
+        u.setRole(registrationRequest.getRole());
         userService.createUser(u);
         return "Ok";
     }

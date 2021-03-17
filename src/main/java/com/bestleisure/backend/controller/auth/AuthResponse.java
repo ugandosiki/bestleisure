@@ -1,4 +1,4 @@
-package com.bestleisure.backend.controller;
+package com.bestleisure.backend.controller.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

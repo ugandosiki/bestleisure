@@ -17,13 +17,13 @@ public class UserController {
     }
 
     @PostMapping("add")
-    public void addUser(RegistrationRequest user) {
-        User u = new User();
-        u.setName(user.getName());
-        u.setEmail(user.getEmail());
-        u.setPassword(user.getPassword());
-        userService.createUser(u);
-    }
+//    public void addUser(RegistrationRequest user) {
+//        User u = new User();
+//        u.setName(user.getName());
+//        u.setEmail(user.getEmail());
+//        u.setPassword(user.getPassword());
+//        userService.createUser(u);
+//    }
 
     @GetMapping("getAll")
     public List<User> getAllUsers() {
