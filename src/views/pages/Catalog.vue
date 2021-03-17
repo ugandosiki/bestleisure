@@ -1,5 +1,5 @@
 <template>
-  <div class="catalog">
+<main class="catalog">
     <filter-menu-component v-if="filterMenu" />
     <q-icon
       :name="matReadMore"
@@ -8,11 +8,11 @@
       :class="{ active_btn: filterMenu }"
       @click="filterMenu = !filterMenu"
     />
-    <main class="catalog_content">
+    <div class="catalog_content">
       <post-component v-for="post in posts" :key="post.id" />
       <q-pagination v-model="page" color="primary" size="16px" :max="pageCount" :direction-links="true" :max-pages="0" @input="pChangeHandler" class="q-pa-md"/>
-    </main>
-  </div>
+    </div>
+  </main>
 </template>
 
 <script>

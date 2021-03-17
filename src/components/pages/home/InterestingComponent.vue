@@ -1,5 +1,5 @@
 <template>
-  <div class="interesting">
+  <div class="interesting shadow-2">
     <div class="block_title">
       <span>Самое интересное</span>
     </div>
@@ -62,7 +62,7 @@ export default {
 </script>
 
 <style scoped>
-.interesting {
+.interesting{
   background-color: rgba(255, 255, 255, 0.7);
   width: 100%;
   position: relative;

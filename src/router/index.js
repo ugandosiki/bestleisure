@@ -25,7 +25,7 @@ const routes = [
       },
       {
         path: "cabinet",
-        component: () => import('../views/pages/About.vue')
+        component: () => import('../views/pages/Cabinet.vue')
       },
       {
         path: "home",

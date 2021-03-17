@@ -1,5 +1,5 @@
 <template>
-  <div class="filter-menu">
+  <div class="filter-menu shadow-2">
     <div class="filter-menu_title"><strong>Фильтры</strong></div>
     <div class="filter-menu_content">
       <q-select

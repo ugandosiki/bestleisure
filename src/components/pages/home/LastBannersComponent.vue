@@ -1,5 +1,5 @@
 <template>
-<div class="last_banners">
+<div class="last_banners shadow-2">
     <div class="block_title">
       <span>Последние акции</span>
     </div>
