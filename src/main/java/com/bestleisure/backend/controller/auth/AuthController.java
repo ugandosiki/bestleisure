@@ -6,6 +6,8 @@ import com.bestleisure.backend.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 
 @RestController
 public class AuthController {
@@ -18,7 +20,10 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String registerUser(RegistrationRequest registrationRequest) {
+    public String registerUser(@Valid RegistrationRequest registrationRequest) {
+        if (registrationRequest == null) {
+            return "Fill all fields!";
+        }
         User u = new User();
         u.setName(registrationRequest.getName());
         u.setEmail(registrationRequest.getEmail());
@@ -29,7 +34,7 @@ public class AuthController {
     }
 
     @PostMapping("/auth")
-    public AuthResponse auth( AuthRequest authRequest) {
+    public AuthResponse auth(AuthRequest authRequest) {
         User user = userService.findByEmailAndPassword(authRequest.getEmail(), authRequest.getPassword());
         String token = jwtProvider.generateToken(user.getEmail());
         return new AuthResponse(token);

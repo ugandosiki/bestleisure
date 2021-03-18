@@ -1,16 +1,20 @@
 package com.bestleisure.backend.controller.auth;
 
 import com.bestleisure.backend.model.Role;
-import com.sun.istack.NotNull;
 import lombok.Data;
+
+import javax.validation.constraints.*;
 
 @Data
 public class RegistrationRequest {
-    @NotNull
+    @NotEmpty(message = "The field above must not be empty!")
+    @Size(min = 1, max = 200)
     private String name;
-    @NotNull
+    @NotEmpty(message = "The field above must not be empty!")
+    @Size(min=1,max=200)
     private String email;
-    @NotNull
+    @NotEmpty(message = "The field above must not be empty!")
+    @Size(min=1,max=200)
     private String password;
     @NotNull
     private Role role;
