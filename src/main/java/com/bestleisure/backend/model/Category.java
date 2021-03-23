@@ -6,7 +6,10 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "categories")
@@ -24,37 +27,20 @@ public class Category {
     @JsonBackReference
     @OneToMany(mappedBy = "category")
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<SubCategory> subCategories;
+    private Set<SubCategory> subCategories = new HashSet<>();
 
     @JsonBackReference
     @OneToMany(mappedBy = "category")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Post> posts;
 
+    public Category() {
+    }
+
     public Category(Long id, String name) {
         this.id = id;
         this.name = name;
     }
-
-    public List<SubCategory> getSubCategories() {
-        return subCategories;
-    }
-
-    public void setSubCategories(List<SubCategory> subCategories) {
-        this.subCategories = subCategories;
-    }
-
-    public List<Post> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
-    }
-
-    public Category() {
-    }
-
 
     public Long getId() {
         return id;
@@ -70,5 +56,21 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<SubCategory> getSubCategories() {
+        return subCategories;
+    }
+
+    public void setSubCategories(Set<SubCategory> subCategories) {
+        this.subCategories = subCategories;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 }

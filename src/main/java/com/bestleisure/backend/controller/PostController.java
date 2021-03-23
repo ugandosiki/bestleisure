@@ -47,16 +47,14 @@ public class PostController {
         }
     }
 
-
     @GetMapping("get")
     public List<Post> getAllPosts() {
         return postService.getAllPost();
     }
 
 
-    @GetMapping("get/{id}")
-    public Post getPost(@PathVariable Long id) {
-
-        return postService.getOnePost(id);
+    @GetMapping("get/{title}")
+    public Post getPost(@PathVariable String title) {
+        return postService.getPostByTitle(title);
     }
 }

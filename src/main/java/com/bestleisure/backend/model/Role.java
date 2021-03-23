@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
@@ -20,7 +21,7 @@ public class Role {
 
     @JsonBackReference
     @OneToMany(mappedBy = "role")
-    private List<User> users;
+    private List<User> users = new ArrayList<>();
 
     public Role() {
     }

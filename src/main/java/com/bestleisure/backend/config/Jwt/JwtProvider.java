@@ -12,7 +12,7 @@ import java.util.Date;
 @Log
 public class JwtProvider {
 
-    private final String jwtSecret = "gavno";
+    private final String jwtSecret = "bestleisure.app.jwtSecret";
 
     public String generateToken(String email) {
         Date date = Date.from(LocalDate.now().plusDays(15).atStartOfDay(ZoneId.systemDefault()).toInstant());

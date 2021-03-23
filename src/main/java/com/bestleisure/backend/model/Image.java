@@ -27,7 +27,7 @@ public class Image {
 
     @JsonBackReference
     @ManyToOne(optional = true, cascade = CascadeType.ALL)
-    @JoinColumn(name = "banner")
+    @JoinColumn(name = "banner_id")
     private Banner banner;
 
     public Image() {

@@ -1,4 +1,4 @@
-package com.bestleisure.backend.controller.auth;
+package com.bestleisure.backend.controller.request;
 
 import com.bestleisure.backend.model.Role;
 import lombok.Data;
@@ -11,10 +11,10 @@ public class RegistrationRequest {
     @Size(min = 1, max = 200)
     private String name;
     @NotEmpty(message = "The field above must not be empty!")
-    @Size(min=1,max=200)
+    @Size(min = 1, max = 200)
     private String email;
     @NotEmpty(message = "The field above must not be empty!")
-    @Size(min=1,max=200)
+    @Size(min = 1, max = 200)
     private String password;
     @NotNull
     private Role role;
@@ -34,4 +34,5 @@ public class RegistrationRequest {
     public Role getRole() {
         return role;
     }
+
 }

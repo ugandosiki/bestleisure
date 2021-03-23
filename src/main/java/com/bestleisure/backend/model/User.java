@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
@@ -28,9 +29,12 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "city")
+    private String city;
+
     @JsonBackReference
     @OneToMany(mappedBy = "user")
-    private List<Post> posts;
+    private List<Post> posts = new ArrayList<>();
 
     @JsonManagedReference
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
@@ -41,12 +45,13 @@ public class User {
 
     }
 
-    public User(Long id, String name, String email, String password, Role role) {
+    public User(Long id, String name, String email, String password, String city, Role role) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.city = city;
     }
 
     public User(String name, String email, String password, Role role) {
@@ -88,11 +93,27 @@ public class User {
         this.password = password;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     public Role getRole() {
         return role;
     }
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 }

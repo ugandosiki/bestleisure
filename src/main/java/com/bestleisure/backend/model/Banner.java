@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
@@ -34,7 +35,7 @@ public class Banner {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "banner")
-    private List<Image> images;
+    private List<Image> images=new ArrayList<>();
 
     public Banner() {
     }

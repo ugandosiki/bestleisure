@@ -1,7 +1,7 @@
 package com.bestleisure.backend.config.Jwt;
 
-import com.bestleisure.backend.config.security.CustomUserDetails;
-import com.bestleisure.backend.config.security.CustomUserDetailsService;
+import com.bestleisure.backend.service.CustomUserDetails;
+import com.bestleisure.backend.service.CustomUserDetailsService;
 import lombok.extern.java.Log;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

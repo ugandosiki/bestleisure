@@ -7,7 +7,9 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "subcategories")
@@ -29,7 +31,7 @@ public class SubCategory {
     @JsonBackReference
     @OneToMany(mappedBy = "subCategory")
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Post> posts;
+    private List<Post> posts = new ArrayList<>();
 
     public SubCategory() {
     }
@@ -62,5 +64,13 @@ public class SubCategory {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 }

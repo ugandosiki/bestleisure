@@ -1,4 +1,4 @@
-package com.bestleisure.backend.controller.auth;
+package com.bestleisure.backend.controller.request;
 
 import com.sun.istack.NotNull;
 import lombok.Data;

@@ -1,6 +1,7 @@
-package com.bestleisure.backend.config.security;
+package com.bestleisure.backend.service;
 
 import com.bestleisure.backend.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,12 +10,28 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class CustomUserDetails implements UserDetails {
+    private Long id;
+    private String name;
     private String email;
+    @JsonIgnore
     private String password;
     private Collection<? extends GrantedAuthority> grantedAuthorities;
 
-    public static CustomUserDetails fromUserToCustomUserDetails(User user) {
+    public CustomUserDetails() {
+    }
+
+    public CustomUserDetails(Long id, String name, String email, String password, Collection<? extends GrantedAuthority> grantedAuthorities) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.grantedAuthorities = grantedAuthorities;
+    }
+
+    public static CustomUserDetails build(User user) {
         CustomUserDetails customUserDetails = new CustomUserDetails();
+        customUserDetails.id = user.getId();
+        customUserDetails.name = user.getName();
         customUserDetails.email = user.getEmail();
         customUserDetails.password = user.getPassword();
         customUserDetails.grantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRole().getName()));
@@ -54,5 +71,41 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Collection<? extends GrantedAuthority> getGrantedAuthorities() {
+        return grantedAuthorities;
+    }
+
+    public void setGrantedAuthorities(Collection<? extends GrantedAuthority> grantedAuthorities) {
+        this.grantedAuthorities = grantedAuthorities;
     }
 }
