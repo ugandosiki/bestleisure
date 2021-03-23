@@ -7,7 +7,7 @@
           clearable
           filled
           square
-          v-model="name"
+          v-model="user.name"
           label="Имя*"
           hint="Введите имя или никнейм"
           lazy-rules
@@ -20,7 +20,7 @@
           filled
           square
           type="email"
-          v-model="email"
+          v-model="user.email"
           label="Email*"
           hint="Введите email"
           lazy-rules
@@ -31,7 +31,7 @@
         <q-select
           square
           filled
-          v-model="role"
+          v-model="user.role"
           :options="options"
           label="Выберите тип аккаунта"
           :option-value="
@@ -44,7 +44,7 @@
         />
         <span class="about_acc" @click="about">Подробнее про аккаунты</span>
         <q-input
-          v-model="password"
+          v-model="user.password"
           square
           filled
           label="Пароль*"
@@ -70,7 +70,7 @@
             size="15px"
             :loading="loading"
             color="primary"
-            @click="simulateProgress()"
+            @click="handleRegister()"
             style="width: 100%"
           >
             Зарегистрироваться
@@ -94,22 +94,32 @@
 </template>
 
 <script>
+import axios from "axios";
+import User from "@/models/user";
+
 export default {
   name: "Register",
   data() {
     return {
-      options: [{ name: "Владелец" }, { name: "Посетитель" }],
+      options: null,
       loading: false,
-      name: null,
-      email: null,
-      role: null,
-      password: null,
+      user: new User("", "", ""),
       isPwd: false,
     };
   },
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    },
+  },
+  mounted() {
+    axios.get("http://localhost:8080/roles/getAll").then(response => this.options = response.data)
+    if (this.loggedIn) {
+      this.$router.push("/cabinet");
+    }
+  },
 
   methods: {
-    onSubmit() {},
     about() {
       this.$q.dialog({
         title: "Про аккаунты",
@@ -120,6 +130,11 @@ export default {
         html: true,
       });
     },
+    handleRegister() {
+          this.$store.dispatch("auth/register", this.user)
+          this.simulateProgress()
+    },
+
     simulateProgress() {
       // we set loading state
       this.loading = true;
