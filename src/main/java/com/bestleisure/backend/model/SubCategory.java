@@ -24,7 +24,7 @@ public class SubCategory {
     private String name;
 
     @JsonManagedReference
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "category_id")
     private Category category;
 

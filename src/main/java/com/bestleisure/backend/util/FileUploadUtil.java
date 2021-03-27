@@ -6,6 +6,7 @@ import com.bestleisure.backend.model.Image;
 import com.bestleisure.backend.model.Post;
 import com.bestleisure.backend.repository.IImageRepository;
 import com.bestleisure.backend.service.ImageService;
+import com.bestleisure.backend.service.PostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,10 +21,11 @@ import java.nio.file.StandardCopyOption;
 
 public class FileUploadUtil {
     static ImageService imageService;
+    static PostService postService;
 
-
-    public FileUploadUtil(ImageService imageService) {
+    public FileUploadUtil(ImageService imageService, PostService postService) {
         FileUploadUtil.imageService = imageService;
+        FileUploadUtil.postService = postService;
     }
 
     public static void saveFile(String uploadDir, String fileName,
@@ -42,6 +44,12 @@ public class FileUploadUtil {
         }
     }
 
+    public static void deleteFileFromDir(String fileName, Long postId) throws IOException {
+        String uploadDir = "uploads/";
+        Path path = Paths.get(uploadDir);
+        Path filePath = path.resolve("Post_" + postId + "_" + fileName + ".jpg");
+        Files.deleteIfExists(filePath);
+    }
 
     public static ResponseEntity<ResponseMessage> upload(@RequestParam("file") MultipartFile file, Post post) {
         String message = "";

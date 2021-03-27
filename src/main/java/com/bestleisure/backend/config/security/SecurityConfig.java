@@ -36,7 +36,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("posts/*").hasAnyRole("USER", "ADMIN", "OWNER")
 //                .antMatchers("posts/add").not().hasRole("USER")
                 .and()
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .cors();
+
     }
 
     @Bean

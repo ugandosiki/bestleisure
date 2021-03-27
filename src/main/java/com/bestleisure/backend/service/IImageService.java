@@ -5,6 +5,5 @@ import com.bestleisure.backend.model.Image;
 public interface IImageService {
     void saveImage(Image image);
     Image getOneImage(Long id);
-    void deleteImage();
-
+    void deleteImageByPostTitle(String postTitle);
 }

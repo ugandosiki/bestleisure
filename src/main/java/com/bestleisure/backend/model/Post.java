@@ -26,17 +26,17 @@ public class Post {
     private Integer likes;
 
     @JsonManagedReference
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "category_id")
     private Category category;
 
     @JsonManagedReference
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "user_id")
     private User user;
 
     @JsonManagedReference
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "subcategory_id")
     private SubCategory subCategory;
 

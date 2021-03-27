@@ -10,5 +10,5 @@ public interface IPostService {
     Post getPostByTitle(String title);
     List<Post> getAllPost();
     void deletePost(Long id);
-    void deletePost(String name);
+    void deletePost(String title);
 }

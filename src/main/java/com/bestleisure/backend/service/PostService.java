@@ -9,9 +9,9 @@ import java.util.List;
 
 @Service
 public class PostService implements IPostService {
-    final IPostRepository iPostRepository;
+    private final IPostRepository iPostRepository;
 
-    public PostService(IPostRepository iPostRepository) {
+    public PostService(final IPostRepository iPostRepository) {
         this.iPostRepository = iPostRepository;
     }
 

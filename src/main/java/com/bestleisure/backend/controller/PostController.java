@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 
@@ -56,5 +57,16 @@ public class PostController {
     @GetMapping("get/{title}")
     public Post getPost(@PathVariable String title) {
         return postService.getPostByTitle(title);
+    }
+
+    @Transactional
+    @PostMapping("delete")
+    public ResponseEntity<ResponseMessage> deletePost(String title) throws IOException {
+        Long postId = postService.getPostByTitle(title).getId();
+        FileUploadUtil.deleteFileFromDir(title, postId);
+        imageService.deleteImageByPostTitle(title);
+        postService.deletePost(title);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("Post " + " was successfully deleted!"));
     }
 }

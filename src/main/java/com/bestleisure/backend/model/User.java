@@ -37,7 +37,7 @@ public class User {
     private List<Post> posts = new ArrayList<>();
 
     @JsonManagedReference
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "role_id")
     private Role role;
 

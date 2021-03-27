@@ -2,7 +2,6 @@ package com.bestleisure.backend.service;
 
 import com.bestleisure.backend.model.Image;
 import com.bestleisure.backend.repository.IImageRepository;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,11 +23,11 @@ public class ImageService implements IImageService {
 
     @Override
     public Image getOneImage(Long id) {
-            return iImageRepository.getOne(id);
+        return iImageRepository.getOne(id);
     }
 
     @Override
-    public void deleteImage() {
-
+    public void deleteImageByPostTitle(String postTitle) {
+        iImageRepository.deleteImageByPostTitle(postTitle);
     }
 }

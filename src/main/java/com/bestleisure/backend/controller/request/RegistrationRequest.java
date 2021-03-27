@@ -16,6 +16,8 @@ public class RegistrationRequest {
     @NotEmpty(message = "The field above must not be empty!")
     @Size(min = 1, max = 200)
     private String password;
+    @Size(min = 1, max = 200)
+    private String city;
     @NotNull
     private Role role;
 
