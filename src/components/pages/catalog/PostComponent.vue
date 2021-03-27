@@ -10,18 +10,17 @@
     </q-img>
     <div class="post_content">
       <div class="post_title">
-        <p><strong>Lorem ipsum dolor sit.</strong></p>
+        <p><strong>post.title</strong></p>
       </div>
       <div class="post_descr">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Est unde
-        similique vero omnis optio ullam ea laboriosam accusamus modi eligendi.
+        post.description
       </div>
       <div class="post_info">
         <div class="likes">
-          <q-icon :name="matThumbUp" size="18px" /><span>1</span>
+          <q-icon :name="matThumbUp" size="18px" /><span>post.likes</span>
         </div>
-        <div class="country"><strong>Украина</strong></div>
-        <div class="city"><strong>Киев</strong></div>
+        <div class="country"><strong>post.category.name</strong></div>
+        <div class="city"><strong>post.subCategory.name</strong></div>
       </div>
       <router-link to="/about" tag="button">Перейти на страницу</router-link>
     </div>
@@ -34,6 +33,7 @@ export default {
   name: "PostComponent",
   data() {
     return {
+      src: "http://localhost:8080/uploads/",
       matThumbUp: null,
     };
   },
@@ -46,14 +46,13 @@ export default {
 <style scoped>
 .post {
   background: rgba(255, 255, 255, 0.8);
- 
   display: flex;
   width: 97%;
   padding: 10px;
   margin: 10px;
   align-items: center;
   position: relative;
-  z-index: 9998;
+  z-index: 1;
   font-family: "Roboto Condensed", sans-serif;
 }
 .post_title p {

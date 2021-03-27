@@ -1,5 +1,5 @@
 import AuthService from '../services/auth.service';
-
+import router from '../router'
 const user = JSON.parse(localStorage.getItem('user'));
 const initialState = user
   ? { status: { loggedIn: true }, user }
@@ -10,20 +10,13 @@ export const auth = {
   state: initialState,
   actions: {
     login({ commit }, user) {
-      return AuthService.login(user).then(
-        user => {
-          commit('loginSuccess', user);
-          return Promise.resolve(user);
-        },
-        error => {
-          commit('loginFailure');
-          return Promise.reject(error);
-        }
-      );
+      AuthService.login(user)
+      router.push("/cabinet")
     },
     logout({ commit }) {
       AuthService.logout();
       commit('logout');
+      router.replace("auth/login")
     },
     register({ commit }, user) {
       AuthService.register(user)
@@ -33,7 +26,7 @@ export const auth = {
   mutations: {
     loginSuccess(state, user) {
       state.status.loggedIn = true;
-      state.user = user;
+      state.user = user
     },
     loginFailure(state) {
       state.status.loggedIn = false;

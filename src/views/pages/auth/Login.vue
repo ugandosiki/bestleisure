@@ -8,7 +8,7 @@
           filled
           square
           type="email"
-          v-model="email"
+          v-model="user.email"
           label="Email*"
           hint="Введите email"
           lazy-rules
@@ -17,7 +17,7 @@
           ]"
         />
         <q-input
-          v-model="password"
+          v-model="user.password"
           square
           filled
           label="Пароль*"
@@ -43,7 +43,7 @@
             size="15px"
             :loading="loading"
             color="primary"
-            @click="simulateProgress()"
+            @click="handleLogin()"
             style="width: 100%"
           >
             Войти
@@ -67,17 +67,38 @@
 </template>
 
 <script>
+import User from "@/models/user";
 export default {
-name: "Login",
+  name: "Login",
   data() {
     return {
+      user: new User("", ""),
       loading: false,
       email: null,
       password: null,
+      isPwd: false,
     };
   },
-   methods: {
-    onSubmit() {},
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    },
+  },
+  created() {
+    if (this.loggedIn) {
+      this.$router.push("/cabinet");
+    }
+  },
+  methods: {
+    handleLogin() {
+      if (this.user.email && this.user.password) {
+        this.$store
+          .dispatch("auth/login", this.user).then(()=>this.simulateProgress())
+          .catch((error) => {
+            console.log(error.message);
+          });
+      }
+    },
     simulateProgress() {
       // we set loading state
       this.loading = true;
@@ -87,8 +108,8 @@ name: "Login",
         this.loading = false;
       }, 3000);
     },
-   }
-}
+  },
+};
 </script>
 
 <style scoped>

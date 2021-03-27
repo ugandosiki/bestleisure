@@ -33,7 +33,7 @@
           filled
           v-model="user.role"
           :options="options"
-          label="Выберите тип аккаунта"
+          label="Выберите тип аккаунта*"
           :option-value="
             (opt) => (Object(opt) === opt && 'id' in opt ? opt.id : null)
           "
@@ -42,7 +42,14 @@
               Object(opt) === opt && 'name' in opt ? opt.name : '- Null -'
           "
         />
+       
         <span class="about_acc" @click="about">Подробнее про аккаунты</span>
+        <q-input  v-model="user.city" label="Город" hint="Укажите ваш город" filled square clearable>
+        <template v-slot:prepend> 
+          <q-icon name="place" />
+        </template>
+
+      </q-input>
         <q-input
           v-model="user.password"
           square
@@ -103,7 +110,7 @@ export default {
     return {
       options: null,
       loading: false,
-      user: new User("", "", ""),
+      user: new User("", "", "", ""),
       isPwd: false,
     };
   },
@@ -113,7 +120,20 @@ export default {
     },
   },
   mounted() {
-    axios.get("http://localhost:8080/roles/getAll").then(response => this.options = response.data)
+    axios.get("http://localhost:8080/roles/getAll").then((response) => {
+      let rolesList = response.data;
+      rolesList.splice(0, 1);
+      rolesList.map((item) => {
+        if (item.name == "ROLE_USER") {
+          item.name = "Посетитель";
+        }
+        if (item.name == "ROLE_OWNER") {
+          item.name = "Владелец";
+        }
+      });
+      console.log(rolesList);
+      this.options = rolesList;
+    });
     if (this.loggedIn) {
       this.$router.push("/cabinet");
     }
@@ -131,8 +151,9 @@ export default {
       });
     },
     handleRegister() {
-          this.$store.dispatch("auth/register", this.user)
-          this.simulateProgress()
+      this.$store.dispatch("auth/register", this.user);
+      this.simulateProgress();
+      this.$router.push("/auth/login");
     },
 
     simulateProgress() {

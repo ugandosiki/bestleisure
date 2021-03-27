@@ -6,6 +6,8 @@ import AuthLayout from '../views/layouts/AuthLayout'
 
 
 
+
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -25,7 +27,7 @@ const routes = [
       },
       {
         path: "cabinet",
-        component: () => import('../views/pages/Cabinet.vue')
+        component: () => import('../views/pages/Cabinet.vue'),
       },
       {
         path: "home",
@@ -57,5 +59,17 @@ const router = new VueRouter({
   base: "/",
   routes,
 })
-
+router.beforeEach((to, from, next) => {
+  const publicPages = ['/auth/login', '/auth/register'];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = localStorage.getItem('user');
+  if(from.path == "/auth/login"){
+    next()
+  }
+  else if (authRequired && !loggedIn) {
+    next('/auth/login');
+  } else {
+    next();
+  }
+});
 export default router
