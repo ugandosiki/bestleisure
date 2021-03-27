@@ -11,6 +11,7 @@ Vue.component('Paginate', Paginate)
 Vue.config.productionTip = false
 
 store.dispatch("post/fetchAllPosts");
+store.dispatch("banner/fetchAllBanners");
 store.dispatch("category/fetchAllCategories");
 store.dispatch("subcategory/fetchAllSubCategories");
 

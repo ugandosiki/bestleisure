@@ -310,15 +310,13 @@ export default {
   },
   computed: {
     userPosts() {
-      this.$store.dispatch("post/fetchAllPosts");
       let userPosts = this.$store.state.post.posts;
       userPosts.map((e, index, array) => {
         if (e.user.email !== this.$store.state.auth.user.email) {
           array.splice(index, 1);
-        } else {
-          console.log("userPosts fail");
         }
       });
+      console.log(userPosts);
       return userPosts;
     },
     categoryOptions() {
@@ -350,7 +348,6 @@ export default {
       };
       this.$store
         .dispatch("post/create", { data })
-        .then(() => this.$store.dispatch("post/fetchAllPosts"));
       this.$refs.dialog.hide();
     },
     createNewCategory() {

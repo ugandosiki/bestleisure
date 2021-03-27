@@ -1,28 +1,33 @@
 <template>
   <div class="post shadow-2">
-    <q-img
-      :src="src + post.images[0].path"
-      style="height: 200px; max-width: 200px"
-    >
+    <q-img :src="src + postImage.path" style="height: 200px; max-width: 200px">
       <template v-slot:loading>
         <q-spinner-gears color="white" />
       </template>
     </q-img>
     <div class="post_content">
       <div class="post_title">
-        <p><strong>{{post.title}}</strong></p>
+        <p>
+          <strong>{{ post.title }}</strong>
+        </p>
       </div>
       <div class="post_descr">
-        {{post.description}}
+        {{ post.description }}
       </div>
       <div class="post_info">
         <div class="likes">
-          <q-icon :name="matThumbUp" size="18px" /><span>{{post.likes}}</span>
+          <q-icon :name="matThumbUp" size="18px" /><span>{{ post.likes }}</span>
         </div>
-        <div class="country"><strong>{{post.category.name}}</strong></div>
-        <div class="city"><strong>{{post.subCategory.name}}</strong></div>
+        <div class="country">
+          <strong>{{ post.category.name }}</strong>
+        </div>
+        <div class="city">
+          <strong>{{ post.subCategory.name }}</strong>
+        </div>
       </div>
-      <router-link to="/about" tag="button">Перейти на страницу</router-link>
+      <router-link :to="{ name: 'Post', params: { id: post.id } }" tag="button"
+        >Перейти на страницу</router-link
+      >
     </div>
   </div>
 </template>
@@ -38,7 +43,19 @@ export default {
     };
   },
   props: {
-    post: Object,
+    post: { default: Object },
+  },
+  computed: {
+    postImage() {
+      let postImage = {};
+      this.post.images.forEach((e) => {
+        if (e.path.match(/Post/g)) {
+          postImage = e;
+          console.log(postImage);
+        }   
+      });
+      return postImage;
+    },
   },
   created() {
     this.matThumbUp = matThumbUp;
@@ -57,6 +74,9 @@ export default {
   position: relative;
   z-index: 1;
   font-family: "Roboto Condensed", sans-serif;
+}
+.post_content {
+  width: 80%;
 }
 .post_title p {
   text-align: center;

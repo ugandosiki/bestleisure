@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import store from "../store"
 const API_URL = 'http://localhost:8080/posts/';
 
 class PostService {
@@ -24,6 +24,7 @@ class PostService {
             },
         })
             .then(function (response) {
+                store.dispatch("post/fetchAllPosts")
                 console.log(response);
             })
             .catch(function (error) {

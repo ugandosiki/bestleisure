@@ -3,10 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/pages/Home.vue'
 import DefaultLayot from '../views/layouts/DefaultLayout'
 import AuthLayout from '../views/layouts/AuthLayout'
-
-
-
-
+import Post from '../views/pages/Post.vue'
 
 Vue.use(VueRouter)
 
@@ -32,9 +29,15 @@ const routes = [
       {
         path: "home",
         component: Home
-      }
+      },
+      {
+        path: "/post/:id",
+        component: Post,
+        name: "Post"
+      },
     ]
   },
+
   {
     path: '/auth',
     name: 'Auth',
@@ -63,7 +66,7 @@ router.beforeEach((to, from, next) => {
   const publicPages = ['/auth/login', '/auth/register'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');
-  if(from.path == "/auth/login"){
+  if (from.path == "/auth/login") {
     next()
   }
   else if (authRequired && !loggedIn) {

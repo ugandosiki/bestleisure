@@ -5,6 +5,8 @@ import {auth} from "./auth.module"
 import {post} from "./post.module"
 import {category} from "./category.module"
 import {subcategory} from "./subcategory.module"
+import {banner} from "./banner.module"
+
 
 
 
@@ -15,6 +17,7 @@ export default new Vuex.Store({
     auth,
     post,
     category,
-    subcategory
+    subcategory,
+    banner
   }
 })
