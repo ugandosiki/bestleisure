@@ -6,6 +6,7 @@ import com.bestleisure.backend.model.Post;
 import com.bestleisure.backend.service.ImageService;
 import com.bestleisure.backend.service.PostService;
 import com.bestleisure.backend.util.FileUploadUtil;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +42,8 @@ public class PostController {
             imageService.saveImage(image);
             Image currentImg = imageService.getOneImage(image.getId());
             currentImg.setPost(post);
-            currentImg.setPath("Post_" + post.getId() + "_" + post.getTitle() + ".jpg");
+            String ext = FilenameUtils.getExtension(file.getOriginalFilename());
+            currentImg.setPath("Post_" + post.getId() + post.getTitle().replaceAll("\\W|\\d|\\s", "") + "." + ext);
             imageService.saveImage(currentImg);
 
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("File " + file.getOriginalFilename() + " was successfully uploaded!"));

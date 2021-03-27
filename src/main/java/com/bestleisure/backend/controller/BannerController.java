@@ -6,6 +6,7 @@ import com.bestleisure.backend.model.Image;
 import com.bestleisure.backend.service.BannerService;
 import com.bestleisure.backend.service.ImageService;
 import com.bestleisure.backend.util.FileUploadUtil;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,11 +33,14 @@ public class BannerController {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage("File is empty"));
         } else {
             bannerService.createBanner(banner);
+            Banner currentBanner = bannerService.getBannerByTitle(banner.getTitle());
             FileUploadUtil.upload(file, banner);
             imageService.saveImage(image);
             Image currentImg = imageService.getOneImage(image.getId());
+            currentBanner.setImage_id(currentImg.getId());
             currentImg.setBanner(banner);
-            currentImg.setPath("Banner_" + banner.getId() + "_" + banner.getTitle() + ".jpg");
+            String ext = FilenameUtils.getExtension(file.getOriginalFilename());
+            currentImg.setPath("Banner_" + banner.getId() + "_" + banner.getTitle().replaceAll("\\W|\\d|\\s", "") + "." + ext);
             imageService.saveImage(currentImg);
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("File " + file.getOriginalFilename() + " was successfully uploaded!"));
 

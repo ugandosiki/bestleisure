@@ -7,6 +7,7 @@ import com.bestleisure.backend.model.Post;
 import com.bestleisure.backend.repository.IImageRepository;
 import com.bestleisure.backend.service.ImageService;
 import com.bestleisure.backend.service.PostService;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,14 +48,15 @@ public class FileUploadUtil {
     public static void deleteFileFromDir(String fileName, Long postId) throws IOException {
         String uploadDir = "uploads/";
         Path path = Paths.get(uploadDir);
-        Path filePath = path.resolve("Post_" + postId + "_" + fileName + ".jpg");
+        Path filePath = path.resolve("Post_" + postId + fileName + "." + "jpg");
         Files.deleteIfExists(filePath);
     }
 
     public static ResponseEntity<ResponseMessage> upload(@RequestParam("file") MultipartFile file, Post post) {
         String message = "";
         try {
-            String filename = "Post_" + post.getId() + "_" + post.getTitle() + ".jpg";
+            String ext = FilenameUtils.getExtension(file.getOriginalFilename());
+            String filename = "Post_" + post.getId() + post.getTitle().replaceAll("\\W|\\d|\\s", "") + "." + ext;
             String uploadDir = "uploads/";
             FileUploadUtil.saveFile(uploadDir, filename, file);
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
@@ -69,7 +71,8 @@ public class FileUploadUtil {
         String message = "";
         String uploadDir = "uploads/";
         try {
-            String filename = "Banner_" + banner.getId() + "_" + banner.getTitle() + ".jpg";
+            String ext = FilenameUtils.getExtension(file.getOriginalFilename());
+            String filename = "Banner_" + banner.getId() + banner.getTitle().replaceAll("\\W|\\d|\\s", "") + "." + ext;
             FileUploadUtil.saveFile(uploadDir, filename, file);
 
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
