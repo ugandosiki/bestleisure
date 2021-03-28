@@ -45,10 +45,10 @@ public class FileUploadUtil {
         }
     }
 
-    public static void deleteFileFromDir(String fileName, Long postId) throws IOException {
+    public static void deleteFileFromDir(String curImage) throws IOException {
         String uploadDir = "uploads/";
         Path path = Paths.get(uploadDir);
-        Path filePath = path.resolve("Post_" + postId + fileName + "." + "jpg");
+        Path filePath = path.resolve(curImage);
         Files.deleteIfExists(filePath);
     }
 

@@ -64,8 +64,17 @@ public class PostController {
     @Transactional
     @PostMapping("delete")
     public ResponseEntity<ResponseMessage> deletePost(String title) throws IOException {
+        Post curPost = postService.getPostByTitle(title);
+        List<Image> postImages = curPost.getImages();
+        String curImage = "";
+        for (Image img : postImages) {
+            if (img.getPath().contains(curPost.getId().toString())) {
+                curImage = img.getPath();
+            }
+        }
+
         Long postId = postService.getPostByTitle(title).getId();
-        FileUploadUtil.deleteFileFromDir(title, postId);
+        FileUploadUtil.deleteFileFromDir(curImage);
         imageService.deleteImageByPostTitle(title);
         postService.deletePost(title);
 
