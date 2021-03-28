@@ -2,7 +2,7 @@
   <div class="post">
     <span
       class="user-menu fixed-left"
-      v-if="postData.user.role.name == 'ROLE_OWNER'"
+      v-if="postData.user.role.name == 'ROLE_OWNER' && postData.user.email== $store.state.auth.user.email"
     >
       <q-btn
         icon="widgets"
@@ -152,6 +152,7 @@ export default {
       bannerDialog: false,
       banner: new Banner("", "", ""),
       bannerImage: [],
+      menuVisible: false,
     };
   },
   computed: {
@@ -232,9 +233,9 @@ export default {
   padding: 5px 0px;
   height: 42px;
 }
-.banners-content{
-    margin-top: 10px;
-    width: 100%;
+.banners-content {
+  margin-top: 10px;
+  width: 100%;
 }
 .post-descr {
   padding-top: 10px;
