@@ -346,8 +346,7 @@ export default {
         i: this.image,
         u: this.$store.state.auth.user.id,
       };
-      this.$store
-        .dispatch("post/create", { data })
+      this.$store.dispatch("post/create", { data });
       this.$refs.dialog.hide();
     },
     createNewCategory() {
@@ -362,9 +361,7 @@ export default {
       const up = this.userPosts;
       const even = (e) => e.title == this.deleteTitle;
       if (up.some(even)) {
-        this.$store
-          .dispatch("post/delete", this.deleteTitle)
-          .then(() => this.$store.dispatch("post/fetchAllPosts"));
+        this.$store.dispatch("post/delete", this.deleteTitle);
         this.$refs.dialog.hide();
       } else {
         alert("Вы не являетесь владельцем данной записи");

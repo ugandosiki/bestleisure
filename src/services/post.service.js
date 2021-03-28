@@ -31,7 +31,7 @@ class PostService {
                 console.log(error);
             });
     }
-    delete(title){
+    delete(title) {
         const formData = new FormData();
         formData.append("title", title);
         axios({
@@ -44,6 +44,7 @@ class PostService {
             },
         })
             .then(function (response) {
+                store.dispatch("post/fetchAllPosts")
                 console.log(response);
             })
             .catch(function (error) {
