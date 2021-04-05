@@ -7,7 +7,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
@@ -33,13 +35,21 @@ public class User {
     private String city;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts = new ArrayList<>();
 
     @JsonManagedReference
-    @ManyToOne(optional = false, cascade = CascadeType.REFRESH)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "role_id")
     private Role role;
+
+    @JsonBackReference
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "post_like",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "post_id"))
+    Set<Post> likedPosts = new HashSet<>();
 
     public User() {
 
@@ -59,6 +69,13 @@ public class User {
         this.email = email;
         this.password = password;
         this.role = role;
+    }
+    public Set<Post> getLikedPosts() {
+        return likedPosts;
+    }
+
+    public void setLikedPosts(Post likedPost) {
+        this.likedPosts.add(likedPost);
     }
 
     public Long getId() {

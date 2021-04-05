@@ -3,8 +3,10 @@ package com.bestleisure.backend.controller;
 import com.bestleisure.backend.message.ResponseMessage;
 import com.bestleisure.backend.model.Image;
 import com.bestleisure.backend.model.Post;
+import com.bestleisure.backend.model.User;
 import com.bestleisure.backend.service.ImageService;
 import com.bestleisure.backend.service.PostService;
+import com.bestleisure.backend.service.UserService;
 import com.bestleisure.backend.util.FileUploadUtil;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.http.HttpStatus;
@@ -22,11 +24,12 @@ import java.util.List;
 public class PostController {
     final PostService postService;
     final ImageService imageService;
+    final UserService userService;
 
-    public PostController(PostService postService, ImageService imageService) {
+    public PostController(PostService postService, ImageService imageService, UserService userService) {
         this.postService = postService;
         this.imageService = imageService;
-
+        this.userService = userService;
     }
 
 
@@ -38,7 +41,6 @@ public class PostController {
             postService.createPost(post);
 
             FileUploadUtil.upload(file, post);
-
             imageService.saveImage(image);
             Image currentImg = imageService.getOneImage(image.getId());
             currentImg.setPost(post);
@@ -79,5 +81,32 @@ public class PostController {
         postService.deletePost(title);
 
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("Post " + " was successfully deleted!"));
+    }
+
+    @PostMapping("addLike")
+    public ResponseEntity<ResponseMessage> addLike(Long userID, Long postID) throws IOException {
+        User curUser = userService.getOneUser(userID);
+        Post curPost = postService.getOnePost(postID);
+        curUser.getLikedPosts().add(curPost);
+        userService.createUser(curUser);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("Like " + " was successfully added!"));
+    }
+
+    @Transactional
+    @PutMapping("updatedescr/{id}")
+    public ResponseEntity<ResponseMessage> updateDescription(String descr, @PathVariable Long id){
+        Post curPost = postService.getOnePost(id);
+        curPost.setDescription(descr);
+        postService.createPost(curPost);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("Post " + " was successfully updated!"));
+    }
+    
+    @Transactional
+    @PutMapping("updatetitle/{id}")
+    public ResponseEntity<ResponseMessage> updateTitle(String title, @PathVariable Long id){
+        Post curPost = postService.getOnePost(id);
+        curPost.setTitle(title);
+        postService.createPost(curPost);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("Post " + " was successfully updated!"));
     }
 }

@@ -23,7 +23,7 @@ public class SubCategory {
     @Column(name = "name", unique = true)
     private String name;
 
-    @JsonManagedReference
+    @JsonBackReference
     @ManyToOne(optional = false, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "category_id")
     private Category category;

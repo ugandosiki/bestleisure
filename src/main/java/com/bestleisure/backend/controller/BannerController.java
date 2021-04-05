@@ -40,7 +40,7 @@ public class BannerController {
             currentBanner.setImage_id(currentImg.getId());
             currentImg.setBanner(banner);
             String ext = FilenameUtils.getExtension(file.getOriginalFilename());
-            currentImg.setPath("Banner_" + banner.getId() + "_" + banner.getTitle().replaceAll("\\W|\\d|\\s", "") + "." + ext);
+            currentImg.setPath("Banner_" + banner.getId() + banner.getTitle().replaceAll("\\W|\\d|\\s", "") + "." + ext);
             imageService.saveImage(currentImg);
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("File " + file.getOriginalFilename() + " was successfully uploaded!"));
 

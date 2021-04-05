@@ -2,43 +2,39 @@ package com.bestleisure.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
-@Table(name = "categories")
+@Table(name = "types")
 
-public class Category {
+public class Type {
     @Id
     @Column(name = "id", updatable = false)
-    @SequenceGenerator(name = "category_sequence", sequenceName = "categories_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_sequence")
+    @SequenceGenerator(name = "type_sequence", sequenceName = "types_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "type_sequence")
     private Long id;
 
     @Column(name = "name", unique = true)
     private String name;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "category")
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<SubCategory> subCategories = new HashSet<>();
 
     @JsonBackReference
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "type")
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Post> posts;
+    private List<Post> posts = new ArrayList<>();
 
-    public Category() {
+    public Type() {
     }
 
-    public Category(Long id, String name) {
+    public Type(Long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -57,14 +53,6 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Set<SubCategory> getSubCategories() {
-        return subCategories;
-    }
-
-    public void setSubCategories(Set<SubCategory> subCategories) {
-        this.subCategories = subCategories;
     }
 
     public List<Post> getPosts() {

@@ -16,6 +16,12 @@ CREATE TABLE IF NOT EXISTS users
     FOREIGN KEY (role_id) REFERENCES roles (id)
 
 );
+CREATE TABLE IF NOT EXISTS types
+(
+    id         BIGSERIAL PRIMARY KEY,
+    name       VARCHAR(100) UNIQUE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
 CREATE TABLE IF NOT EXISTS categories
 (
     id         BIGSERIAL PRIMARY KEY,
@@ -44,26 +50,40 @@ CREATE TABLE IF NOT EXISTS posts
     subCategory_id INTEGER,
     title          VARCHAR(250) UNIQUE NOT NULL,
     description    TEXT,
-    likes          INTEGER,
+    address        VARCHAR(200) UNIQUE NOT NULL,
     created_at     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (category_id) REFERENCES categories (id),
     FOREIGN KEY (subCategory_id) REFERENCES subCategories (id),
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
+
+CREATE TABLE IF NOT EXISTS post_like
+(
+    id         BIGSERIAL PRIMARY KEY,
+    user_id    INTEGER NOT NULL,
+    post_id    INTEGER NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (post_id) REFERENCES posts (id)
+);
+
 CREATE TABLE IF NOT EXISTS banners
 (
     id          BIGSERIAL PRIMARY KEY,
     post_id     INTEGER,
     image_id    INTEGER,
-    title       VARCHAR(250) UNIQUE NOT NULL,
+    title       VARCHAR(250) NOT NULL,
     description TEXT,
     created_at  TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (post_id) REFERENCES posts (id)
 );
+
 ALTER TABLE images
     ADD post_id INTEGER NULL
         REFERENCES posts (id);
 ALTER TABLE images
     ADD banner_id INTEGER NULL
         REFERENCES banners (id);
-
+ALTER TABLE posts
+    ADD type_id INTEGER NULL
+        REFERENCES types (id);

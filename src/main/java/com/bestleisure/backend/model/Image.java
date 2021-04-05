@@ -21,12 +21,12 @@ public class Image {
     private String path;
 
     @JsonBackReference
-    @ManyToOne(optional = true, cascade = CascadeType.ALL)
+    @ManyToOne(optional = true, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "post_id")
     private Post post;
 
     @JsonBackReference
-    @ManyToOne(optional = true, cascade = CascadeType.ALL)
+    @ManyToOne(optional = true, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "banner_id")
     private Banner banner;
 

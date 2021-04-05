@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
@@ -22,44 +24,60 @@ public class Post {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "likes")
-    private Integer likes;
-
     @JsonManagedReference
-    @ManyToOne(optional = false, cascade = CascadeType.REFRESH)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "category_id")
     private Category category;
 
     @JsonManagedReference
-    @ManyToOne(optional = false, cascade = CascadeType.REFRESH)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "type_id")
+    private Type type;
+
+    @JsonManagedReference
+    @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")
     private User user;
 
     @JsonManagedReference
-    @ManyToOne(optional = false, cascade = CascadeType.REFRESH)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "subcategory_id")
     private SubCategory subCategory;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "post")
-    private List<Banner> banners=new ArrayList<>();
-
+    private List<Banner> banners = new ArrayList<>();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "post")
-    private List<Image> images=new ArrayList<>();
+    private List<Image> images = new ArrayList<>();
+
+    @Column(name = "address", unique = true, nullable = false)
+    private String address;
+
+    @JsonManagedReference
+    @ManyToMany(mappedBy = "likedPosts")
+    Set<User> userLikes = new HashSet<>();
 
     public Post() {
     }
 
-    public Post(Long id, String title, String description, Category category, SubCategory subCategory, User user, Integer likes) {
+    public Post(Long id, String title, String description, Category category, SubCategory subCategory, User user, String address) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.category = category;
         this.subCategory = subCategory;
         this.user = user;
-        this.likes = likes;
+        this.address = address;
+    }
+
+    public Set<User> getUserLikes() {
+        return userLikes;
+    }
+
+    public void setUserLikes(User user) {
+        this.userLikes.add(user);
     }
 
     public List<Banner> getBanners() {
@@ -118,14 +136,6 @@ public class Post {
         this.user = user_id;
     }
 
-    public Integer getLikes() {
-        return likes;
-    }
-
-    public void setLikes(Integer likes) {
-        this.likes = likes;
-    }
-
     public List<Image> getImages() {
         return images;
     }
@@ -134,5 +144,20 @@ public class Post {
         this.images = images;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
 }
 

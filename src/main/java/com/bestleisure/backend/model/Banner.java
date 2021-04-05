@@ -18,7 +18,7 @@ public class Banner {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "banner_sequence")
     private Long id;
 
-    @Column(name = "title", unique = true, nullable = false)
+    @Column(name = "title", nullable = false)
     private String title;
 
     @Column(name = "description", unique = true)
@@ -28,13 +28,13 @@ public class Banner {
     private Long image_id;
 
     @JsonBackReference
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "post_id")
     private Post post;
 
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "banner")
+    @OneToMany(mappedBy = "banner", cascade = CascadeType.ALL)
     private List<Image> images = new ArrayList<>();
 
     public Banner() {
