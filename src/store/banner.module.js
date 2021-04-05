@@ -10,13 +10,17 @@ export const banner = {
             console.log(payload.data.b)
             BannerService.create(payload.data.p, payload.data.b, payload.data.i)
         },
-        fetchAllBanners({ commit }) {
-            axios.get("http://localhost:8080/banners/get").then((response) => {
-                let banners = response.data;
+        async fetchAllBanners({ commit }) {
+            try {
+                const { data } = await axios.get("http://localhost:8080/banners/get")
+                let banners = data;
                 commit("setAllBanners", banners)
-            })
+            }
+            catch (error) {
+                console.log(error)
+            }
         },
-        delete({commit}, title){
+        delete({ commit }, title) {
             console.log(title)
             BannerService.delete(title);
         }

@@ -10,11 +10,15 @@ export const subcategory = {
             console.log(subcategory)
             SubCategoryService.create(subcategory)
         },
-        fetchAllSubCategories({ commit }) {
-            axios.get("http://localhost:8080/subcategories/get").then((response) => {
-                let scategories = response.data;
+        async fetchAllSubCategories({ commit }) {
+            try {
+                const { data } = await axios.get("http://localhost:8080/subcategories/get")
+                let scategories = data;
                 commit("setAllSubCategories", scategories)
-            })
+            }
+            catch (error) {
+                console.log(error)
+            }
         }
     },
     mutations: {

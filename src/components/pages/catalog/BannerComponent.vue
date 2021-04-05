@@ -1,8 +1,18 @@
 <template>
   <div class="banner">
-    <q-img :src="src + bannerImage.path" style="width: 100%; height: 256px" />
-    <div class="banner-title"><strong>{{banner.title}}</strong></div>
-    <div class="banner-descr">{{banner.description}}</div>
+    <div class="q-pa-md row items-start q-gutter-md">
+      <q-card class="my-card">
+        <img :src="src + bannerImage.path" />
+
+        <q-card-section>
+          <div class="text-h6">{{ banner.title }}</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          {{ banner.description }}
+        </q-card-section>
+      </q-card>
+    </div>
   </div>
 </template>
 
@@ -32,11 +42,11 @@ export default {
 </script>
 
 <style scoped>
-.banner{
-    padding-top: 50px;
+.banner {
+  padding-top: 50px;
+  width: 33%;
 }
-.banner-title{
-    font-size: 16pt;
-    text-align: center;
+.my-card img {
+  height: 256px;
 }
 </style>

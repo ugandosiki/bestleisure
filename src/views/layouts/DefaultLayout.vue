@@ -1,5 +1,5 @@
 <template>
-  <div class="main_layout" :style="{'background-image': `url(${require('@/assets/bananas.png')})`}">
+  <div class="main_layout" :style="{'background-image': `url(${require('@/assets/layout_bg.svg')})`, 'background-size': `cover`, 'background-position':`left`}">
     <nav class="desc_nav shadow-2">
       <ul>
         <router-link
@@ -77,6 +77,7 @@ export default {
 }
 .main_layout {
   min-height: 100vh;
+  
 }
 .desc_nav {
   background-color: #07a7a7;
@@ -85,7 +86,9 @@ export default {
   margin: auto;
   display: flex;
   align-items: center;
+ 
 }
+
 .desc_nav ul {
   width: 100%;
   height: 100%;

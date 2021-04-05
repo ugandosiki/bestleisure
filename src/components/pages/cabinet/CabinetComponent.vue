@@ -136,6 +136,29 @@
               <q-icon name="attach_file" />
             </template>
           </q-file>
+
+          <q-input bottom-slots v-model="post.address" label="Адрес заведения">
+            <template v-slot:prepend>
+              <q-icon name="place" />
+            </template>
+
+            <template v-slot:hint>
+              Введите полный адрес вашего заведения(Украина, г. Киев, ул.
+              Чкаловская 4А)
+            </template>
+          </q-input>
+          <q-select
+            square
+            outlined
+            name="type"
+            v-model="post.type"
+            :options="typeOptions"
+            option-value="id"
+            option-label="name"
+            emit-value
+            map-options
+            label="Выберите тип заведения"
+          />
           <q-select
             square
             outlined
@@ -301,7 +324,7 @@ export default {
       openCreateNewSubCategory: false,
       openCreateNewPost: false,
       openCreateNewCategory: false,
-      post: new Post("", "", "", "", ""),
+      post: new Post("", "", "", "", "", "", ""),
       category: new Category(""),
       subcategory: new SubCategory("", ""),
       image: [],
@@ -335,6 +358,14 @@ export default {
       });
       return subCategoryOptions;
     },
+    typeOptions(){
+      let typesData = this.$store.state.type.types;
+      let typeOptions = [];
+      typesData.forEach((element) => {
+        typeOptions.push(Object.freeze(element));
+      });
+      return typeOptions;
+    }
   },
   methods: {
     createNewPost() {
@@ -388,7 +419,7 @@ h6 {
 }
 .cabinet_content {
   border-radius: 3px;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.9);
   margin: 3% auto;
   display: flex;
   flex-direction: column;

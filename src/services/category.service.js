@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import store from "../store"
 const API_URL = 'http://localhost:8080/categories/';
 
 class CategoryService {
@@ -17,6 +17,7 @@ class CategoryService {
             },
         })
             .then(function (response) {
+                store.dispatch("category/fetchAllCategories");
                 console.log(response);
             })
             .catch(function (error) {

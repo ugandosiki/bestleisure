@@ -2,7 +2,10 @@
   <div class="post">
     <span
       class="user-menu fixed-left"
-      v-if="postData.user.role.name == 'ROLE_OWNER' && postData.user.email== $store.state.auth.user.email"
+      v-if="
+        postData.user.role.name == 'ROLE_OWNER' &&
+        postData.user.email == $store.state.auth.user.email
+      "
     >
       <q-btn
         icon="widgets"
@@ -19,11 +22,11 @@
               label="Добавить рекламу"
               color="teal"
               style="border-radius: 0px"
-              @click="bannerDialog = true"
+              @click="bannerDialogAdd = true"
             />
             <q-dialog
               ref="dialog"
-              v-model="bannerDialog"
+              v-model="bannerDialogAdd"
               transition-show="scale"
               transition-hide="scale"
             >
@@ -40,7 +43,7 @@
                     square
                     outlined
                     label="Название*"
-                    hint="Введите название страны"
+                    hint="Введите название акции"
                     lazy-rules
                     name="title"
                     :rules="[
@@ -91,14 +94,90 @@
               label="Редактировать описание"
               color="teal"
               style="border-radius: 0px"
-              @click="open('left')"
+              @click="postDialogDescr = true"
             />
+            <q-dialog
+              ref="dialog"
+              v-model="postDialogDescr"
+              transition-show="scale"
+              transition-hide="scale"
+            >
+              <div class="form-div q-pa-md">
+                <q-form
+                  class="q-gutter-md"
+                  @submit.prevent="updateDescr()"
+                  method="put"
+                  enctype="multipart/form-data"
+                >
+                  <div>
+                    <q-input
+                      v-model="postDescription"
+                      filled
+                      square
+                      outlined
+                      autogrow
+                      label="Описание*"
+                      hint="Введите новое описание"
+                      name="description"
+                      lazy-rules
+                      :rules="[
+                        (val) =>
+                          (val && val.length > 0) || 'Please type something',
+                      ]"
+                    />
+                    <q-btn
+                      label="Изменить описание"
+                      type="submit"
+                      color="primary"
+                    />
+                  </div>
+                </q-form>
+              </div>
+            </q-dialog>
             <q-btn
               label="Изменить название"
               color="teal"
               style="border-radius: 0px"
-              @click="open('left')"
+              @click="postDialogTitle = true"
             />
+            <q-dialog
+              ref="dialog"
+              v-model="postDialogTitle"
+              transition-show="scale"
+              transition-hide="scale"
+            >
+              <div class="form-div q-pa-md">
+                <q-form
+                  class="q-gutter-md"
+                  @submit.prevent="updateTitle()"
+                  method="put"
+                  enctype="multipart/form-data"
+                >
+                  <div>
+                    <q-input
+                      v-model="postTitle"
+                      filled
+                      square
+                      outlined
+                      autogrow
+                      label="Название*"
+                      hint="Введите новое название"
+                      name="title"
+                      lazy-rules
+                      :rules="[
+                        (val) =>
+                          (val && val.length > 0) || 'Please type something',
+                      ]"
+                    />
+                    <q-btn
+                      label="Изменить название"
+                      type="submit"
+                      color="primary"
+                    />
+                  </div>
+                </q-form>
+              </div>
+            </q-dialog>
             <q-btn
               label="Сменить изображение"
               color="teal"
@@ -112,11 +191,40 @@
     <div class="post_content shadow-4">
       <div class="q-col-gutter-md row items-start">
         <div class="col-12">
-          <q-img :src="src + postImage.path" style="width: 100%; height: 300px">
-            <div class="absolute-bottom text-subtitle3 text-center">
-              <span class="post-title">{{ postData.title }}</span>
-            </div>
-          </q-img>
+          <div>
+            <q-parallax :height="300" :speed="0.7">
+              <template v-slot:media>
+                <img :src="src + postImage.path" />
+              </template>
+              <div class="absolute-bottom text-subtitle3 text-center">
+                <div class="post-title">{{ postData.title }}</div>
+              </div>
+              <q-btn
+                class="absolute-left"
+                icon="favorite"
+                :label="postData.userLikes.length"
+                color="primary"
+                style="border-radius: 0px; height: 35px"
+                @click="addLike()"
+              />
+              <br />
+              <q-chip
+                class="absolute-left"
+                color="primary"
+                text-color="white"
+                icon="place"
+                square
+                style="
+                  border-radius: 0px;
+                  margin-left: 0px;
+                  top: 45px;
+                  font-size: 11.5pt;
+                "
+              >
+                {{ postData.address }}
+              </q-chip>
+            </q-parallax>
+          </div>
         </div>
       </div>
       <div class="post-descr">
@@ -132,6 +240,9 @@
             :key="banner.id"
             :banner="banner"
           />
+          <div class="empty-banners" v-if="postData.banners.length == 0">
+            <p class="text-center">У этого заведения пока что нет акций</p>
+          </div>
         </div>
       </div>
     </div>
@@ -149,10 +260,14 @@ export default {
       src: "http://localhost:8080/uploads/",
       dialog: false,
       position: "left",
-      bannerDialog: false,
+      postDialogDescr: false,
+      bannerDialogAdd: false,
+      postDialogTitle: false,
       banner: new Banner("", "", ""),
       bannerImage: [],
       menuVisible: false,
+      postDescription: "",
+      postTitle: "",
     };
   },
   computed: {
@@ -164,6 +279,7 @@ export default {
           post = e;
         }
       });
+      this.postDescription = post.description;
       return post;
     },
     postImage() {
@@ -192,6 +308,29 @@ export default {
       this.$store.dispatch("banner/create", { data });
       this.$refs.dialog.hide();
     },
+    updateDescr() {
+      let data = {
+        i: this.postData.id,
+        d: this.postDescription,
+      };
+      this.$store.dispatch("post/updateDescr", { data });
+      this.$refs.dialog.hide();
+    },
+    updateTitle() {
+      let data = {
+        i: this.postData.id,
+        t: this.postTitle,
+      };
+      this.$store.dispatch("post/updateTitle", { data });
+      this.$refs.dialog.hide();
+    },
+    addLike() {
+      const data = {
+        userID: this.$store.state.auth.user.id,
+        postID: this.postData.id,
+      };
+      this.$store.dispatch("post/addLike", data);
+    },
   },
 };
 </script>
@@ -212,6 +351,10 @@ export default {
 }
 .post-title {
   font-size: 18pt;
+  color: white;
+  width: 100%;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
   text-transform: uppercase;
 }
 .descr-title {
@@ -223,7 +366,7 @@ export default {
   position: absolute;
 }
 .banner-title {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.4);
   font-size: 16pt;
   color: white;
   position: absolute;
@@ -235,6 +378,10 @@ export default {
 }
 .banners-content {
   margin-top: 10px;
+  min-height: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
   width: 100%;
 }
 .post-descr {
@@ -251,12 +398,9 @@ export default {
   background-color: white;
   display: flex;
   text-align: center;
-  padding-bottom: 50px;
+  padding-bottom: 25px;
 }
-.banner {
-  margin-left: 20px;
-  width: 31%;
-}
+
 .user-menu {
   height: 30px;
   top: 46.5%;
@@ -274,5 +418,16 @@ export default {
   margin: auto;
   width: 100%;
   background-color: rgba(255, 255, 255, 1);
+}
+.empty-banners {
+  margin-top: 75px;
+  width: 100%;
+  font-size: 16pt;
+  text-align: center;
+}
+@media (max-width: 650px) {
+  .banner {
+    width: 100%;
+  }
 }
 </style>

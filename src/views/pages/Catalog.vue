@@ -1,6 +1,10 @@
 <template>
-<main class="catalog">
-    <filter-menu-component v-if="filterMenu" />
+  <main class="catalog">
+    <filter-menu-component
+      v-if="filterMenu"
+      :allPosts="allPosts"
+      @find="onFind($event)"
+    />
     <q-icon
       :name="matReadMore"
       size="xl"
@@ -8,9 +12,20 @@
       :class="{ active_btn: filterMenu }"
       @click="filterMenu = !filterMenu"
     />
-    <div class="catalog_content">
-      <post-component v-for="post in posts" :key="post.id" />
-      <q-pagination v-model="page" color="primary" size="16px" :max="pageCount" :direction-links="true" :max-pages="0" @input="pChangeHandler" class="q-pa-md"/>
+
+    <div class="q-pa-md row q-gutter-xl catalog_content">
+      <post-component v-for="post in posts" :key="post.id" :postData="post" />
+
+      <q-pagination
+        v-model="page"
+        color="primary"
+        size="16px"
+        :max="pageCount"
+        :direction-links="true"
+        :max-pages="0"
+        @input="pChangeHandler"
+        class="pagination"
+      />
     </div>
   </main>
 </template>
@@ -26,12 +41,125 @@ export default {
   mixins: [paginationMixin],
   data() {
     return {
-      filterMenu: false,
+      filterMenu: true,
       matReadMore: matReadMore,
     };
   },
-  methods: {},
-  async mounted() {
+  methods: {
+    onFind(data) {
+      console.log("child component said", data);
+      let backupData = this.fetchedPosts;
+      if (
+        data.category == null &&
+        data.subCategory == null &&
+        data.type == null &&
+        data.like == null
+      ) {
+        this.allPosts = backupData;
+        this.initPagination(this.allPosts);
+      }
+      if (data.category != null) {
+        this.allPosts = this.fetchedPosts.filter(
+          (e) => e.category.name == data.category.name
+        );
+        this.initPagination(this.allPosts);
+      }
+      if (data.subCategory != null) {
+        this.allPosts = this.fetchedPosts.filter(
+          (e) => e.subCategory.name == data.subCategory.name
+        );
+        console.log("all posts", this.allPosts);
+        this.initPagination(this.allPosts);
+      }
+      if (
+        data.type !== null &&
+        data.category !== null &&
+        data.subCategory !== null
+      ) {
+        this.allPosts = this.fetchedPosts.filter(
+          (e) =>
+            e.type.name == data.type.name &&
+            e.category.name == data.category.name &&
+            e.subCategory.name == data.subCategory.name
+        );
+        console.log("all posts", this.allPosts);
+        this.initPagination(this.allPosts);
+      }
+      if (
+        data.type !== null &&
+        data.category == null &&
+        data.subCategory == null
+      ) {
+        this.allPosts = this.fetchedPosts.filter(
+          (e) => e.type.name == data.type.name
+        );
+        console.log("all posts", this.allPosts);
+        this.initPagination(this.allPosts);
+      }
+      if (
+        data.type !== null &&
+        data.category !== null 
+      ) {
+        this.allPosts = this.fetchedPosts.filter(
+          (e) =>
+            e.type.name == data.type.name &&
+            e.category.name == data.category.name
+        );
+        console.log("all posts", this.allPosts);
+        this.initPagination(this.allPosts);
+      }
+      if (
+        data.type !== null &&
+        data.category !== null &&
+        data.subCategory !== null &&
+        data.like.id == 1
+      ) {
+        this.allPosts.sort(function (a, b) {
+          return a.userLikes.length - b.userLikes.length;
+        });
+        console.log("all posts", this.allPosts);
+        this.initPagination(this.allPosts);
+      }
+      if (
+        data.like.id == 1 &&
+        data.type == null &&
+        data.type == null &&
+        data.category == null
+      ) {
+        this.allPosts = this.fetchedPosts.sort(function (a, b) {
+          console.log(a.userLikes.length - b.userLikes.length);
+          return a.userLikes.length - b.userLikes.length;
+        });
+        console.log("like", data.like);
+        this.initPagination(this.allPosts);
+      }
+      if (
+        data.like.id == 2 &&
+        data.type == null &&
+        data.type == null &&
+        data.category == null
+      ) {
+        this.allPosts = this.fetchedPosts.sort(function (a, b) {
+          return b.userLikes.length - a.userLikes.length;
+        });
+        console.log("like", data.like);
+        this.initPagination(this.allPosts);
+      }
+      if (
+        data.type !== null &&
+        data.category !== null &&
+        data.subCategory !== null &&
+        data.like.id == 2
+      ) {
+        this.allPosts.sort(function (a, b) {
+          return b.userLikes.length - a.userLikes.length;
+        });
+        console.log("all posts", this.allPosts);
+        this.initPagination(this.allPosts);
+      }
+    },
+  },
+  mounted() {
     this.initPagination(this.allPosts);
   },
 };
@@ -43,12 +171,10 @@ export default {
   justify-content: center;
 }
 .catalog_content {
-  margin: auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   width: 50%;
-  padding-top: 3%;
+  margin-top: 1%;
 }
 .filter-btn {
   transition-duration: 0.3s;
@@ -62,7 +188,12 @@ export default {
   transition-duration: 0.3s;
   transform: none;
 }
-@media (max-width: 600px) {
+.pagination {
+  background: white;
+  width: 99%;
+  margin-top: 130px;
+}
+@media (max-width: 1024px) {
   .catalog_content {
     width: 90%;
     margin-top: 30px;

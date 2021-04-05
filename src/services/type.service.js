@@ -1,13 +1,12 @@
 import axios from 'axios';
 import store from "../store"
-const API_URL = 'http://localhost:8080/subcategories/';
+const API_URL = 'http://localhost:8080/types/';
 
-class SubCategoryService {
-    create(subcategory) {
+class TypeService {
+    create(type) {
         const formData = new FormData();
-        formData.append("name", subcategory.name);
-        formData.append("category", subcategory.category);
-        console.log(subcategory)
+        formData.append("name", type.name);
+        console.log(type)
         axios({
             method: "post",
             url: API_URL + "add",
@@ -18,7 +17,7 @@ class SubCategoryService {
             },
         })
             .then(function (response) {
-                store.dispatch("subcategory/fetchAllSubCategories");
+                store.dispatch("type/fetchAllTypes");
                 console.log(response);
             })
             .catch(function (error) {
@@ -26,4 +25,4 @@ class SubCategoryService {
             });
     }
 }
-export default new SubCategoryService();
+export default new TypeService();

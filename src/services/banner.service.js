@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import store from "../store"
 const API_URL = 'http://localhost:8080/banners/';
 
 class BannerService {
@@ -20,6 +20,8 @@ class BannerService {
             },
         })
             .then(function (response) {
+                store.dispatch("banner/fetchAllBanners");
+                store.dispatch("post/fetchAllPosts")
                 console.log(response);
             })
             .catch(function (error) {

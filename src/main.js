@@ -10,6 +10,7 @@ import Paginate from 'vuejs-paginate'
 Vue.component('Paginate', Paginate)
 Vue.config.productionTip = false
 
+store.dispatch("type/fetchAllTypes");
 store.dispatch("post/fetchAllPosts");
 store.dispatch("banner/fetchAllBanners");
 store.dispatch("category/fetchAllCategories");
