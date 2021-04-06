@@ -98,6 +98,7 @@
             />
             <q-dialog
               ref="dialog"
+              full-width
               v-model="postDialogDescr"
               transition-show="scale"
               transition-hide="scale"
@@ -110,22 +111,93 @@
                   enctype="multipart/form-data"
                 >
                   <div>
-                    <q-input
+                    <q-editor
+              
                       v-model="postDescription"
-                      filled
-                      square
-                      outlined
-                      autogrow
-                      label="Описание*"
-                      hint="Введите новое описание"
-                      name="description"
-                      lazy-rules
-                      :rules="[
-                        (val) =>
-                          (val && val.length > 0) || 'Please type something',
+                      toolbar-bg="primary"
+                      toolbar-text-color="white"
+                      toolbar-toggle-color="black"
+                      :dense="$q.screen.lt.md"
+                      :toolbar="[
+                        [
+                          {
+                            label: 'ВЫРАВНИВАНИЕ',
+                            icon: $q.iconSet.editor.align,
+                            fixedLabel: true,
+                            list: 'only-icons',
+                            options: ['left', 'center', 'right', 'justify'],
+                          },
+                        ],
+                        [
+                          'bold',
+                          'italic',
+                          'strike',
+                          'underline',
+                          'subscript',
+                          'superscript',
+                        ],
+                        ['token', 'hr', 'link', 'custom_btn'],
+                        ['print', 'fullscreen'],
+                        [
+                          {
+                            label: 'ЗАГОЛОВКИ',
+                            icon: $q.iconSet.editor.formatting,
+                            list: 'no-icons',
+                            options: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+                          },
+                          {
+                            label: 'РАЗМЕР ТЕКСТА',
+                            icon: $q.iconSet.editor.fontSize,
+                            fixedLabel: true,
+                            fixedIcon: true,
+                            list: 'no-icons',
+                            options: [
+                              'size-1',
+                              'size-2',
+                              'size-3',
+                              'size-4',
+                              'size-5',
+                              'size-6',
+                              'size-7',
+                            ],
+                          },
+                          {
+                            label: 'СТИЛЬ ТЕКСТА',
+                            icon: $q.iconSet.editor.font,
+                            fixedIcon: true,
+                            list: 'no-icons',
+                            options: [
+                              'default_font',
+                              'arial',
+                              'arial_black',
+                              'comic_sans',
+                              'courier_new',
+                              'impact',
+                              'lucida_grande',
+                              'times_new_roman',
+                              'verdana',
+                            ],
+                          },
+                          'removeFormat',
+                        ],
+                        ['quote', 'unordered', 'ordered', 'outdent', 'indent'],
+
+                        ['undo', 'redo'],
+                        ['viewsource'],
                       ]"
+                      :fonts="{
+                        arial: 'Arial',
+                        arial_black: 'Arial Black',
+                        comic_sans: 'Comic Sans MS',
+                        courier_new: 'Courier New',
+                        impact: 'Impact',
+                        lucida_grande: 'Lucida Grande',
+                        times_new_roman: 'Times New Roman',
+                        verdana: 'Verdana',
+                      }"
                     />
                     <q-btn
+                      class="q-ma-sm"
                       label="Изменить описание"
                       type="submit"
                       color="primary"
@@ -229,7 +301,7 @@
       </div>
       <div class="post-descr">
         <span class="descr-title">О ЗАВЕДЕНИИ</span><br />
-        <p>{{ postData.description }}</p>
+        <p v-html="description">{{ description }}</p>
       </div>
       <div class="post-banners">
         <span class="banner-title">АКЦИИ</span><br />
@@ -268,6 +340,7 @@ export default {
       menuVisible: false,
       postDescription: "",
       postTitle: "",
+      description: "",
     };
   },
   computed: {
@@ -280,6 +353,7 @@ export default {
         }
       });
       this.postDescription = post.description;
+      this.description = post.description;
       return post;
     },
     postImage() {
@@ -336,6 +410,10 @@ export default {
 </script>
 
 <style scoped>
+span .block{
+  font-size: 16px;
+  margin: 0;
+}
 .post {
   display: flex;
   justify-content: center;

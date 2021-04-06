@@ -85,6 +85,7 @@
       v-model="openCreateNewPost"
       transition-show="scale"
       transition-hide="scale"
+      full-width
       square
     >
       <div class="form-div q-pa-md">
@@ -107,22 +108,87 @@
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
           />
-
-          <q-input
+          <span class="e-label">Введите описание*</span>
+          <q-editor
             v-model="post.description"
-            filled
-            square
-            outlined
-            autogrow
-            label="Описание*"
-            hint="Введите описание"
-            name="description"
-            lazy-rules
-            :rules="[
-              (val) => (val && val.length > 0) || 'Please type something',
-            ]"
-          />
+            :dense="$q.screen.lt.md"
+            :toolbar="[
+              [
+                {
+                  label: 'ВЫРАВНИВАНИЕ',
+                  icon: $q.iconSet.editor.align,
+                  fixedLabel: true,
+                  options: ['left', 'center', 'right', 'justify'],
+                },
+              ],
+              [
+                'bold',
+                'italic',
+                'strike',
+                'underline',
+                'subscript',
+                'superscript',
+              ],
+              ['token', 'hr', 'link', 'custom_btn'],
+              ['print', 'fullscreen'],
+              [
+                {
+                  label: 'ЗАГОЛОВКИ',
+                  icon: $q.iconSet.editor.formatting,
+                  list: 'no-icons',
+                  options: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+                },
+                {
+                  label: 'РАЗМЕР ТЕКСТА',
+                  icon: $q.iconSet.editor.fontSize,
+                  fixedLabel: true,
+                  fixedIcon: true,
+                  list: 'no-icons',
+                  options: [
+                    'size-1',
+                    'size-2',
+                    'size-3',
+                    'size-4',
+                    'size-5',
+                    'size-6',
+                    'size-7',
+                  ],
+                },
+                {
+                  label: 'СТИЛЬ ТЕКСТА',
+                  icon: $q.iconSet.editor.font,
+                  fixedIcon: true,
+                  list: 'no-icons',
+                  options: [
+                    'default_font',
+                    'arial',
+                    'arial_black',
+                    'comic_sans',
+                    'courier_new',
+                    'impact',
+                    'lucida_grande',
+                    'times_new_roman',
+                    'verdana',
+                  ],
+                },
+                'removeFormat',
+              ],
+              ['quote', 'unordered', 'ordered', 'outdent', 'indent'],
 
+              ['undo', 'redo'],
+              ['viewsource'],
+            ]"
+            :fonts="{
+              arial: 'Arial',
+              arial_black: 'Arial Black',
+              comic_sans: 'Comic Sans MS',
+              courier_new: 'Courier New',
+              impact: 'Impact',
+              lucida_grande: 'Lucida Grande',
+              times_new_roman: 'Times New Roman',
+              verdana: 'Verdana',
+            }"
+          />
           <q-file
             color="dark-12"
             v-model="image"
@@ -358,14 +424,14 @@ export default {
       });
       return subCategoryOptions;
     },
-    typeOptions(){
+    typeOptions() {
       let typesData = this.$store.state.type.types;
       let typeOptions = [];
       typesData.forEach((element) => {
         typeOptions.push(Object.freeze(element));
       });
       return typeOptions;
-    }
+    },
   },
   methods: {
     createNewPost() {
@@ -403,6 +469,12 @@ export default {
 </script>
 
 <style scoped>
+.e-label {
+  position: relative;
+  color: #5c5c5c;
+  left: 10px;
+  top: 10px;
+}
 .cabinet {
   display: flex;
   justify-content: center;

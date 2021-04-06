@@ -11,8 +11,8 @@
           <strong>{{ post.title }}</strong>
         </p>
       </div>
-      <div class="post_descr">
-        {{ post.description }}
+      <div class="post_descr" v-html="description">
+        {{ description }}
       </div>
       <div class="post_info">
         <div class="likes">
@@ -40,6 +40,7 @@ export default {
     return {
       src: "http://localhost:8080/uploads/",
       matThumbUp: null,
+      description: this.post.description
     };
   },
   props: {

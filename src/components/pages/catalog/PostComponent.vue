@@ -7,8 +7,8 @@
             {{ postData.category.name }}-{{ postData.subCategory.name }}
           </div>
           <div class="text-h5 q-mt-sm q-mb-xs">{{ postData.title }}</div>
-          <div class="text-caption text-grey">
-            {{ postData.description.substr(0, 300).trim() +"..." }}
+          <div class="text-caption text-grey" v-html="description">
+            {{ description.substr(0, 300).trim() +"..." }}
           </div>
         </q-card-section>
 
@@ -36,6 +36,7 @@ export default {
     return {
       src: "http://localhost:8080/uploads/",
       matThumbUp: null,
+      description: this.postData.description
     };
   },
   props: {
