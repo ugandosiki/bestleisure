@@ -98,7 +98,6 @@
             />
             <q-dialog
               ref="dialog"
-              full-width
               v-model="postDialogDescr"
               transition-show="scale"
               transition-hide="scale"
@@ -117,7 +116,7 @@
                       toolbar-bg="primary"
                       toolbar-text-color="white"
                       toolbar-toggle-color="black"
-                      :dense="$q.screen.lt.md"
+                      :dense="$q.screen.lt.xl"
                       :toolbar="[
                         [
                           {

@@ -85,7 +85,6 @@
       v-model="openCreateNewPost"
       transition-show="scale"
       transition-hide="scale"
-      full-width
       square
     >
       <div class="form-div q-pa-md">
@@ -111,7 +110,7 @@
           <span class="e-label">Введите описание*</span>
           <q-editor
             v-model="post.description"
-            :dense="$q.screen.lt.md"
+            :dense="$q.screen.lt.xl"
             :toolbar="[
               [
                 {
