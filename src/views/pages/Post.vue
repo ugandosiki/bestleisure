@@ -111,11 +111,7 @@
                 >
                   <div>
                     <q-editor
-              
                       v-model="postDescription"
-                      toolbar-bg="primary"
-                      toolbar-text-color="white"
-                      toolbar-toggle-color="black"
                       :dense="$q.screen.lt.xl"
                       :toolbar="[
                         [
@@ -409,7 +405,7 @@ export default {
 </script>
 
 <style scoped>
-span .block{
+span .block {
   font-size: 16px;
   margin: 0;
 }
