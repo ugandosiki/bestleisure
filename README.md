@@ -12,5 +12,5 @@
 # Навигация по репозиторию
 1. В ветке Frontend хранится фронтенд проект на Vue JS
 2. В ветке Backend хранится проект на Java Spring (Rest)
-3. Для запуска приложения необходимо наличие Java, настроенный Hibernate и база данных PG. Проверить application.properties и migration.
+3. Для запуска приложения необходимо наличие Java Spring, настроенный Hibernate и база данных PG. Проверить application.properties и migration.
 
